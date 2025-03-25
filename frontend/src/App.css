@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #001529;
+    padding: 0 24px;
+    color: white;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .content {
+    padding: 24px;
+    min-height: calc(100vh - 64px);
+    background: #f0f2f5;
+  }
+  
+  .ant-menu-item {
+    margin: 8px 0;
+  }
+  
+  .transaction-status {
+    margin: 16px 0;
+    padding: 12px;
+    background: #e6f7ff;
+    border: 1px solid #91d5ff;
+    border-radius: 4px;
+  }
