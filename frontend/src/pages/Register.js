@@ -1,26 +1,32 @@
 import React, { useState } from 'react';
-import { Button, Input, Form, message } from 'antd';
+import { Input, Form, Button, message } from 'antd';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
-export default function Register() {
+export default function Register({ walletAddress }) {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate(); 
 
   const handleRegister = async (values) => {
-    const { name, email, password, address } = values; // Include address field
-    // console.log(values);
-    
+    const { name, email, password } = values; // 从表单中获取其他字段
+    if (!walletAddress) {
+      message.error("请先连接 MetaMask");
+      return;
+    }
+
     try {
       setLoading(true);
-      // Call the backend registration API
+      // 调用后端注册 API
       const response = await axios.post('http://localhost:8080/register', {
         username: name,
         email,
         password,
-        address, // Send the address field to the backend
+        address: walletAddress, // 使用从 WalletConnector 获取的地址
       });
       message.success("注册成功，请登录");
+      navigate('/login'); // 注册成功后跳转到登录页面
     } catch (error) {
-      message.error("注册失败: " + (error.response?.data?.error || error));
+      message.error("注册失败: " + (error.response?.data?.error || error.message));
     } finally {
       setLoading(false);
     }
@@ -40,7 +46,7 @@ export default function Register() {
           name="email"
           rules={[
             { required: true, message: '请输入邮箱' },
-            { type: 'email', message: '邮箱格式不正确' }
+            { type: 'email', message: '邮箱格式不正确' },
           ]}
         >
           <Input placeholder="邮箱" />
@@ -51,11 +57,12 @@ export default function Register() {
         >
           <Input.Password placeholder="密码" />
         </Form.Item>
-        <Form.Item
-          name="address"
-          rules={[{ required: true, message: '请输入区块链地址' }]} // Add validation for address
-        >
-          <Input placeholder="区块链地址" />
+        <Form.Item>
+          <Input
+            placeholder="区块链地址"
+            value={walletAddress}
+            disabled
+          />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>

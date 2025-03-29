@@ -6,7 +6,7 @@ export default function VoterPanel({ contract }) {
   const [candidates, setCandidates] = useState([]);
   const [hasVoted, setHasVoted] = useState(false);
 
-  // ¼ÓÔØºòÑ¡ÈËÊý¾Ý
+  // åŠ è½½å€™é€‰äººæ•°æ®
   const loadCandidates = async () => {
     if (contract) {
       const count = await contract.getCandidateCount();
@@ -23,16 +23,16 @@ export default function VoterPanel({ contract }) {
     }
   };
 
-  // ´¦ÀíÍ¶Æ±
+  // å¤„ç†æŠ•ç¥¨
   const handleVote = async (candidateId) => {
     try {
       const tx = await contract.vote(candidateId);
       await tx.wait();
-      message.success("Í¶Æ±³É¹¦£¡");
+      message.success("æŠ•ç¥¨æˆåŠŸï¼");
       setHasVoted(true);
       loadCandidates();
     } catch (error) {
-      message.error(`Í¶Æ±Ê§°Ü: ${error.message}`);
+      message.error(`æŠ•ç¥¨å¤±è´¥: ${error.message}`);
     }
   };
 
@@ -53,13 +53,13 @@ export default function VoterPanel({ contract }) {
                 onClick={() => handleVote(item.id)}
                 disabled={hasVoted}
               >
-                {hasVoted ? "ÒÑÍ¶Æ±" : "Í¶Æ±"}
+                {hasVoted ? "å·²æŠ•ç¥¨" : "æŠ•ç¥¨"}
               </Button>
             ]}
           >
             <List.Item.Meta
               title={item.name}
-              description={`µ±Ç°Æ±Êý: ${item.votes}`}
+              description={`å½“å‰ç¥¨æ•°: ${item.votes}`}
             />
           </List.Item>
         )}

@@ -15,6 +15,9 @@ func main() {
 	// 初始化数据库
 	config.InitDB()
 
+	// 初始化登录服务
+	controllers.InitLoginService(config.DB)
+
 	// 初始化 ContractService
 	clientURL := "http://127.0.0.1:8545"                                             // 替换为你的以太坊节点 URL
 	privateKey := "5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a" // 替换为你的钱包私钥

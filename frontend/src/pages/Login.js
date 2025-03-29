@@ -1,67 +1,73 @@
-import React, { useState } from 'react';
-import { Button, Input, Form, message } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Form, Input, Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { ethers } from 'ethers';
-import contractABI from '../contracts/VotingContract.json';
+import axios from 'axios';
 
-const CONTRACT_ADDRESS = "0xa131AD247055FD2e2aA8b156A11bdEc81b9eAD95"; // Replace with your contract address
-
-export default function Login({ onLogin }) {
+export default function Login({ walletAddress, setToken }) {
+  useEffect(() => {
+    console.log("Wallet address updated in Login.js:", walletAddress);
+  }, [walletAddress]);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // 使用钱包地址和密码登录
   const handleLogin = async (values) => {
-    const { address } = values;
-    if (window.ethereum) {
-      try {
-        setLoading(true);
-        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = web3Provider.getSigner();
-        const votingContract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
-
-        const isAdmin = await votingContract.isAdmin(address);
-        const isRegistered = await votingContract.voters(address);
-
-        if (isRegistered.isRegistered) {
-          onLogin(address, isAdmin);
-          message.success("Login successful");
-        } else {
-          message.error("Account not found, please register first");
-        }
-      } catch (error) {
-        console.error("Login failed:", error);
-        message.error("Login failed: " + error.message);
-      } finally {
-        setLoading(false);
-      }
-    } else {
-      message.error("Please install MetaMask!");
+    const { password } = values;
+    if (!walletAddress) {
+      message.error("无法获取钱包地址，请检查 MetaMask 是否已连接");
+      return;
     }
-  };
 
-  const handleNavigateToRegister = () => {
-    navigate('/register');
+    try {
+      setLoading(true);
+      const response = await axios.post('http://localhost:8080/login', {
+        address: walletAddress,
+        passwd: password,
+      });
+      message.success(`登录成功，欢迎 ${response.data.user}`);
+      setToken(response.data.token); // 保存 Token
+      navigate('/voter'); 
+    } catch (error) {
+      if (error.response?.data?.error === "用户未注册，请先注册") {
+        message.error("该地址未注册，请先注册");
+      } else {
+        message.error("登录失败: " + (error.response?.data?.error || error.message));
+      }
+      navigate('/login');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <div style={{ maxWidth: 400, margin: 'auto', padding: '20px' }}>
-      <h2>Login</h2>
+      <h2>用户登录</h2>
       <Form onFinish={handleLogin}>
+      
+        <Form.Item>
+          <Input
+            placeholder="钱包地址"
+            value={walletAddress || "未连接"}
+            disabled
+          />
+        </Form.Item>
         <Form.Item
-          name="address"
-          rules={[{ required: true, message: 'Please enter your account' }]}
+          name="password"
+          rules={[{ required: true, message: '请输入密码' }]}
         >
-          <Input placeholder="Email address" />
+          <Input.Password placeholder="密码" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit" loading={loading}>
-            Login
+            登录
+          </Button>
+        </Form.Item>
+        <Form.Item>
+          <Button type="link" onClick={() => navigate('/register')}>
+            没有账户？点击注册
           </Button>
         </Form.Item>
       </Form>
-      <Button type="primary" onClick={handleNavigateToRegister}>
-        Register
-      </Button>
     </div>
   );
 }

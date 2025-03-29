@@ -17,14 +17,19 @@ func NewLoginService(db *gorm.DB) *LoginService {
 	return &LoginService{DB: db}
 }
 
-func (service *LoginService) LoginUser(email, password string) (string, error) {
+// 使用钱包地址登录
+func (service *LoginService) LoginWithAddress(address string, password string) (string, error) {
 	var user models.User
-	if err := service.DB.Where("email = ?", email).First(&user).Error; err != nil {
-		return "", fmt.Errorf("invalid email")
+	if err := service.DB.Where("address = ?", address).First(&user).Error; err != nil {
+		if err == gorm.ErrRecordNotFound {
+			return "", fmt.Errorf("用户未注册，请先注册")
+		}
+		return "", fmt.Errorf("failed to query user: %v", err)
 	}
 
+	// 验证密码
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(password)); err != nil {
-		return "", fmt.Errorf("invalid password")
+		return "", fmt.Errorf("密码错误")
 	}
 
 	// 生成 JWT

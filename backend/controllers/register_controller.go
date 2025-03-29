@@ -45,6 +45,7 @@ func RegisterVoter(c *gin.Context) {
 		Name:     req.Username,
 		Email:    req.Email,
 		Password: hashedPassword,
+		Address:  req.Address,
 	}
 
 	// Check for duplicate users in the database

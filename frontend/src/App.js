@@ -1,18 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Routes,
-  Route,
-  Link,
-  useNavigate
-} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { ethers } from 'ethers';
-import { Layout, Menu, Spin, Alert } from 'antd';
-import { 
-  WalletOutlined, 
-  UserOutlined, 
-  PieChartOutlined,
-  LockOutlined 
-} from '@ant-design/icons';
+import { Layout, Menu, Spin } from 'antd';
+import { WalletOutlined, UserOutlined, PieChartOutlined, LockOutlined } from '@ant-design/icons';
 import WalletConnector from './components/WalletConnector';
 import VoterPanel from './components/VoterPanel';
 import AdminPanel from './components/AdminPanel';
@@ -23,7 +13,7 @@ import contractABI from './contracts/VotingContract.json';
 import './App.css';
 
 const { Header, Content, Sider } = Layout;
-const CONTRACT_ADDRESS = "0xa131AD247055FD2e2aA8b156A11bdEc81b9eAD95"; // Replace with your contract address
+const CONTRACT_ADDRESS = "0x5fbdb2315678afecb367f032d93f642f64180aa3"; // 替换为你的合约地址
 
 function App() {
   const [provider, setProvider] = useState(null);
@@ -32,16 +22,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate();
 
-  const handleLogin = (address, isAdmin) => {
-    setAccount(address);
-    setIsAdmin(isAdmin);
-    setIsLoggedIn(true);
-    navigate('/');
-  };
-
-  // connectWallet
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
@@ -50,28 +31,24 @@ function App() {
         const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = web3Provider.getSigner();
         const address = await signer.getAddress();
-        
-        const votingContract = new ethers.Contract(
-          CONTRACT_ADDRESS, 
-          contractABI, 
-          signer
-        );
-        
+
+        const votingContract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, signer);
+
         setProvider(web3Provider);
         setContract(votingContract);
         setAccount(address);
+        console.log("Wallet address set in App.js:", address); 
       } catch (error) {
-        console.error("Connected failed:", error);
-        Alert.error("Wallet connected Failed");
+        console.error("Connection failed:", error);
+        message.error("Wallet connection failed");
       } finally {
         setLoading(false);
       }
     } else {
-      Alert.error("Please install MetaMask!");
+      message.error("Please install MetaMask!");
     }
   };
 
-  // disconnectWallet
   const disconnectWallet = () => {
     setProvider(null);
     setContract(null);
@@ -80,88 +57,59 @@ function App() {
     setIsLoggedIn(false);
   };
 
-  // initBlockchain
-  const initBlockchain = async () => {
-    if (window.ethereum) {
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const web3Provider = new ethers.providers.Web3Provider(window.ethereum);
-        const signer = web3Provider.getSigner();
-        const address = await signer.getAddress();
-        
-        const votingContract = new ethers.Contract(
-          CONTRACT_ADDRESS, 
-          contractABI, 
-          signer
-        );
-
-        // Verify administrator identity
-        const isAdmin = await votingContract.isAdmin(address);
-        
-        setProvider(web3Provider);
-        setContract(votingContract);
-        setAccount(address);
-        setIsAdmin(isAdmin);
-      } catch (error) {
-        console.error("Initialization failed:", error);
-      }
-    }
-  };
-
   return (
-      <Layout>
-        <Header className="header">
-          <div className="logo">Blockchain E-Voting System</div>
-          <WalletConnector 
-            account={account} 
-            onConnect={connectWallet}
-            onDisconnect={disconnectWallet}
-            loading={loading}
-          />
-        </Header>
-        
-        <Layout>
-          {isLoggedIn && (
-            <Sider width={200} theme="light">
-              <Menu mode="inline">
-                <Menu.Item key="vote" icon={<UserOutlined />}>
-                  <Link to="/">VoterPanel</Link>
-                </Menu.Item>
-                <Menu.Item key="results" icon={<PieChartOutlined />}>
-                  <Link to="/results">LiveResults</Link>
-                </Menu.Item>
-                {isAdmin && (
-                  <Menu.Item key="admin" icon={<LockOutlined />}>
-                    <Link to="/admin">AdminPanel</Link>
-                  </Menu.Item>
-                )}
-              </Menu>
-            </Sider>
-          )}
+    <Layout>
+      <Header className="header">
+        <div className="logo">Blockchain E-Voting System</div>
+        <WalletConnector
+          account={account}
+          onConnect={connectWallet}
+          onDisconnect={disconnectWallet}
+          loading={loading}
+        />
+      </Header>
 
-          <Content className="content">
-            {loading ? (
-              <Spin tip="Blockchain transaction processing..." size="large" />
+      <Layout>
+        <Content className="content">
+          <Routes>
+            {!isLoggedIn ? (
+              <>
+                <Route path="/login" element={<Login walletAddress={account} setToken={() => setIsLoggedIn(true)} />}
+                  key={account} // 动态 key，确保组件重新渲染    
+                />
+                <Route path="/register" element={<Register walletAddress={account} />} />
+                <Route path="*" element={<Login walletAddress={account} setToken={() => setIsLoggedIn(true)} />} />
+              </>
             ) : (
-              <Routes>
-                {!isLoggedIn ? (
-                  <>
-                    <Route path="/login" element={<Login onLogin={handleLogin} />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="*" element={<Login onLogin={handleLogin} />} />
-                  </>
-                ) : (
-                  <>
-                    <Route path="/" element={<VoterPanel contract={contract} />} />
-                    <Route path="/results" element={<LiveResults contract={contract} />} />
-                    {isAdmin && <Route path="/admin" element={<AdminPanel contract={contract} />} />}
-                  </>
-                )}
-              </Routes>
+              <>
+                <Route path="/" element={<VoterPanel contract={contract} />} />
+                <Route path="/results" element={<LiveResults contract={contract} />} />
+                {isAdmin && <Route path="/admin" element={<AdminPanel contract={contract} />} />}
+              </>
             )}
-          </Content>
-        </Layout>
+          </Routes>
+        </Content>
       </Layout>
+
+  
+        {isLoggedIn && (
+          <Sider width={200} theme="light">
+            <Menu mode="inline">
+              <Menu.Item key="vote" icon={<UserOutlined />}>
+                <Link to="/">VoterPanel</Link>
+              </Menu.Item>
+              <Menu.Item key="results" icon={<PieChartOutlined />}>
+                <Link to="/results">LiveResults</Link>
+              </Menu.Item>
+              {isAdmin && (
+                <Menu.Item key="admin" icon={<LockOutlined />}>
+                  <Link to="/admin">AdminPanel</Link>
+                </Menu.Item>
+              )}
+            </Menu>
+          </Sider>
+        )}    
+    </Layout>
   );
 }
 
