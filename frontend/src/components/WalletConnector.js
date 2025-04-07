@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import { Button, message, Spin } from 'antd';
-import { WalletOutlined, LogoutOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { Button, message, Spin } from "antd";
+import { WalletOutlined, LogoutOutlined } from "@ant-design/icons";
 
-export default function WalletConnector({ account, onConnect, onDisconnect, loading }) {
-  const [isConnecting, setIsConnecting] = useState(false); // 防止重复调用
+export default function WalletConnector({
+  account,
+  onConnect,
+  onDisconnect,
+  loading,
+}) {
+  const [isConnecting, setIsConnecting] = useState(false);
 
   const connectWallet = async () => {
-    if (isConnecting) return; // 如果正在连接，直接返回
+    if (isConnecting) return;
     setIsConnecting(true);
 
     if (!window.ethereum) {
-      
-      message.error("MetaMask is not installed");
+      message.error("MetaMask没有安装");
       setIsConnecting(false);
       return;
     }
 
     try {
-      await onConnect(); // 调用父组件传递的连接逻辑
-      message.success("Wallet connected successfully");
+      await onConnect();
+      message.success("钱包连接成功");
     } catch (error) {
-      message.error("Wallet connection failed: " + error.message);
+      message.error("钱包连接失败: " + error.message);
     } finally {
       setIsConnecting(false);
     }
@@ -28,15 +32,15 @@ export default function WalletConnector({ account, onConnect, onDisconnect, load
 
   const disconnectWallet = async () => {
     if (!window.ethereum) {
-      message.error("MetaMask is not installed");
+      message.error("MetaMask没有安装");
       return;
     }
 
     try {
-      onDisconnect(); // 调用父组件传递的断开逻辑
-      message.success("You have logged out of the current account");
+      onDisconnect();
+      message.success("你已登出当前账户");
     } catch (error) {
-      message.error("Log out failed: " + error.message);
+      message.error("登出失败: " + error.message);
     }
   };
 
@@ -53,7 +57,7 @@ export default function WalletConnector({ account, onConnect, onDisconnect, load
             onClick={disconnectWallet}
             style={{ marginLeft: 8 }}
           >
-            Log out
+            登出
           </Button>
         </div>
       ) : (
@@ -65,11 +69,11 @@ export default function WalletConnector({ account, onConnect, onDisconnect, load
         >
           {loading || isConnecting ? (
             <span>
-              Connecting...
+              连接中...
               <Spin size="small" style={{ marginLeft: 8 }} />
             </span>
           ) : (
-            "Connect Wallet"
+            "连接钱包"
           )}
         </Button>
       )}

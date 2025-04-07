@@ -31,5 +31,16 @@ func LoginWithAddress(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"message": "登录成功", "token": token})
+	// 检查用户是否为管理员
+	isAdmin, err := loginService.IsAdmin(loginData.Address)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "查询用户信息失败: " + err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "登录成功",
+		"token":   token,
+		"isAdmin": isAdmin,
+	})
 }

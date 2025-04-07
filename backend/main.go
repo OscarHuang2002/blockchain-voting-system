@@ -20,15 +20,17 @@ func main() {
 
 	// 初始化 ContractService
 	clientURL := "http://127.0.0.1:8545"                                             // 替换为你的以太坊节点 URL
-	privateKey := "5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a" // 替换为你的钱包私钥
+	privateKey := "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80" // 替换为你的钱包私钥
 	contractAddress := "0x5FbDB2315678afecb367f032d93F642f64180aa3"                  // 替换为你的智能合约地址
 
 	contractService, err := services.NewContractService(clientURL, privateKey, contractAddress)
 	if err != nil {
-		log.Fatalf("Failed to initialize ContractService: %v", err)
+    	log.Fatalf("Failed to initialize ContractService: %v", err)
 	}
 
-	// 初始化控制器依赖
+	// 使用全局初始化函数
+	services.InitGlobalContractService(contractService)
+	services.InitContractService(contractService)
 	controllers.InitDependencies(contractService, config.DB)
 
 	// 设置 Gin 路由

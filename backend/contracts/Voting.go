@@ -29,9 +29,19 @@ var (
 	_ = abi.ConvertType
 )
 
+// VotingContractCandidate is an auto generated low-level Go binding around an user-defined struct.
+type VotingContractCandidate struct {
+	Id                   *big.Int
+	Name                 string
+	ImageUrl             string
+	CandidateDescription string
+	VoteCount            *big.Int
+	IsActive             bool
+}
+
 // ContractsMetaData contains all meta data concerning the Contracts contract.
 var ContractsMetaData = &bind.MetaData{
-	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"}],\"name\":\"CandidateAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"}],\"name\":\"VoteCast\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"VoterRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"VotingEnded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[],\"name\":\"VotingStarted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"}],\"name\":\"addCandidate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"candidates\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"voteCount\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"endVoting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getCandidateCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getVotingStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"isAdmin\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"registerVoter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"startVoting\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_candidateId\",\"type\":\"uint256\"}],\"name\":\"vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"voters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"isRegistered\",\"type\":\"bool\"},{\"internalType\":\"bool\",\"name\":\"hasVoted\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"votingOpen\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
+	ABI: "[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"imageUrl\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"candidateDescription\",\"type\":\"string\"}],\"name\":\"CandidateAdded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"}],\"name\":\"CandidateDeleted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"newName\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"newImageUrl\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"newCandidateDescription\",\"type\":\"string\"}],\"name\":\"CandidateUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"}],\"name\":\"VoteCast\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"voter\",\"type\":\"address\"}],\"name\":\"VoterRegistered\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"}],\"name\":\"VotingProjectCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"VotingProjectEnded\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"projectId\",\"type\":\"uint256\"}],\"name\":\"VotingProjectStarted\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_imageUrl\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_candidateDescription\",\"type\":\"string\"}],\"name\":\"addCandidate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"admin\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"_description\",\"type\":\"string\"}],\"name\":\"createVotingProject\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_candidateId\",\"type\":\"uint256\"}],\"name\":\"deleteCandidate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"endVotingForProject\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"getAllCandidates\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"name\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"imageUrl\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"candidateDescription\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"voteCount\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"}],\"internalType\":\"structVotingContract.Candidate[]\",\"name\":\"\",\"type\":\"tuple[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_candidateId\",\"type\":\"uint256\"}],\"name\":\"getCandidate\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"getCandidateCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"getMyVoteDetail\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"getProjectInfo\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"},{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"_user\",\"type\":\"address\"}],\"name\":\"hasUserVoted\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"projectCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"_voter\",\"type\":\"address\"}],\"name\":\"registerVoter\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"}],\"name\":\"startVotingForProject\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_candidateId\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"_newName\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_newImageUrl\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"_newCandidateDescription\",\"type\":\"string\"}],\"name\":\"updateCandidate\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_projectId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_candidateId\",\"type\":\"uint256\"}],\"name\":\"vote\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"voteDetails\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"candidateId\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"voters\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"isRegistered\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}]",
 }
 
 // ContractsABI is the input ABI used to generate the binding from.
@@ -211,62 +221,79 @@ func (_Contracts *ContractsCallerSession) Admin() (common.Address, error) {
 	return _Contracts.Contract.Admin(&_Contracts.CallOpts)
 }
 
-// Candidates is a free data retrieval call binding the contract method 0x3477ee2e.
+// GetAllCandidates is a free data retrieval call binding the contract method 0xf9ded646.
 //
-// Solidity: function candidates(uint256 ) view returns(uint256 id, string name, uint256 voteCount)
-func (_Contracts *ContractsCaller) Candidates(opts *bind.CallOpts, arg0 *big.Int) (struct {
-	Id        *big.Int
-	Name      string
-	VoteCount *big.Int
-}, error) {
+// Solidity: function getAllCandidates(uint256 _projectId) view returns((uint256,string,string,string,uint256,bool)[])
+func (_Contracts *ContractsCaller) GetAllCandidates(opts *bind.CallOpts, _projectId *big.Int) ([]VotingContractCandidate, error) {
 	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "candidates", arg0)
+	err := _Contracts.contract.Call(opts, &out, "getAllCandidates", _projectId)
 
-	outstruct := new(struct {
-		Id        *big.Int
-		Name      string
-		VoteCount *big.Int
-	})
 	if err != nil {
-		return *outstruct, err
+		return *new([]VotingContractCandidate), err
 	}
 
-	outstruct.Id = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-	outstruct.Name = *abi.ConvertType(out[1], new(string)).(*string)
-	outstruct.VoteCount = *abi.ConvertType(out[2], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new([]VotingContractCandidate)).(*[]VotingContractCandidate)
 
-	return *outstruct, err
+	return out0, err
 
 }
 
-// Candidates is a free data retrieval call binding the contract method 0x3477ee2e.
+// GetAllCandidates is a free data retrieval call binding the contract method 0xf9ded646.
 //
-// Solidity: function candidates(uint256 ) view returns(uint256 id, string name, uint256 voteCount)
-func (_Contracts *ContractsSession) Candidates(arg0 *big.Int) (struct {
-	Id        *big.Int
-	Name      string
-	VoteCount *big.Int
-}, error) {
-	return _Contracts.Contract.Candidates(&_Contracts.CallOpts, arg0)
+// Solidity: function getAllCandidates(uint256 _projectId) view returns((uint256,string,string,string,uint256,bool)[])
+func (_Contracts *ContractsSession) GetAllCandidates(_projectId *big.Int) ([]VotingContractCandidate, error) {
+	return _Contracts.Contract.GetAllCandidates(&_Contracts.CallOpts, _projectId)
 }
 
-// Candidates is a free data retrieval call binding the contract method 0x3477ee2e.
+// GetAllCandidates is a free data retrieval call binding the contract method 0xf9ded646.
 //
-// Solidity: function candidates(uint256 ) view returns(uint256 id, string name, uint256 voteCount)
-func (_Contracts *ContractsCallerSession) Candidates(arg0 *big.Int) (struct {
-	Id        *big.Int
-	Name      string
-	VoteCount *big.Int
-}, error) {
-	return _Contracts.Contract.Candidates(&_Contracts.CallOpts, arg0)
+// Solidity: function getAllCandidates(uint256 _projectId) view returns((uint256,string,string,string,uint256,bool)[])
+func (_Contracts *ContractsCallerSession) GetAllCandidates(_projectId *big.Int) ([]VotingContractCandidate, error) {
+	return _Contracts.Contract.GetAllCandidates(&_Contracts.CallOpts, _projectId)
 }
 
-// GetCandidateCount is a free data retrieval call binding the contract method 0x30a56347.
+// GetCandidate is a free data retrieval call binding the contract method 0x4bd46448.
 //
-// Solidity: function getCandidateCount() view returns(uint256)
-func (_Contracts *ContractsCaller) GetCandidateCount(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function getCandidate(uint256 _projectId, uint256 _candidateId) view returns(uint256, string, string, string, uint256, bool)
+func (_Contracts *ContractsCaller) GetCandidate(opts *bind.CallOpts, _projectId *big.Int, _candidateId *big.Int) (*big.Int, string, string, string, *big.Int, bool, error) {
 	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "getCandidateCount")
+	err := _Contracts.contract.Call(opts, &out, "getCandidate", _projectId, _candidateId)
+
+	if err != nil {
+		return *new(*big.Int), *new(string), *new(string), *new(string), *new(*big.Int), *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out1 := *abi.ConvertType(out[1], new(string)).(*string)
+	out2 := *abi.ConvertType(out[2], new(string)).(*string)
+	out3 := *abi.ConvertType(out[3], new(string)).(*string)
+	out4 := *abi.ConvertType(out[4], new(*big.Int)).(**big.Int)
+	out5 := *abi.ConvertType(out[5], new(bool)).(*bool)
+
+	return out0, out1, out2, out3, out4, out5, err
+
+}
+
+// GetCandidate is a free data retrieval call binding the contract method 0x4bd46448.
+//
+// Solidity: function getCandidate(uint256 _projectId, uint256 _candidateId) view returns(uint256, string, string, string, uint256, bool)
+func (_Contracts *ContractsSession) GetCandidate(_projectId *big.Int, _candidateId *big.Int) (*big.Int, string, string, string, *big.Int, bool, error) {
+	return _Contracts.Contract.GetCandidate(&_Contracts.CallOpts, _projectId, _candidateId)
+}
+
+// GetCandidate is a free data retrieval call binding the contract method 0x4bd46448.
+//
+// Solidity: function getCandidate(uint256 _projectId, uint256 _candidateId) view returns(uint256, string, string, string, uint256, bool)
+func (_Contracts *ContractsCallerSession) GetCandidate(_projectId *big.Int, _candidateId *big.Int) (*big.Int, string, string, string, *big.Int, bool, error) {
+	return _Contracts.Contract.GetCandidate(&_Contracts.CallOpts, _projectId, _candidateId)
+}
+
+// GetCandidateCount is a free data retrieval call binding the contract method 0x26f6a2aa.
+//
+// Solidity: function getCandidateCount(uint256 _projectId) view returns(uint256)
+func (_Contracts *ContractsCaller) GetCandidateCount(opts *bind.CallOpts, _projectId *big.Int) (*big.Int, error) {
+	var out []interface{}
+	err := _Contracts.contract.Call(opts, &out, "getCandidateCount", _projectId)
 
 	if err != nil {
 		return *new(*big.Int), err
@@ -278,133 +305,104 @@ func (_Contracts *ContractsCaller) GetCandidateCount(opts *bind.CallOpts) (*big.
 
 }
 
-// GetCandidateCount is a free data retrieval call binding the contract method 0x30a56347.
+// GetCandidateCount is a free data retrieval call binding the contract method 0x26f6a2aa.
 //
-// Solidity: function getCandidateCount() view returns(uint256)
-func (_Contracts *ContractsSession) GetCandidateCount() (*big.Int, error) {
-	return _Contracts.Contract.GetCandidateCount(&_Contracts.CallOpts)
+// Solidity: function getCandidateCount(uint256 _projectId) view returns(uint256)
+func (_Contracts *ContractsSession) GetCandidateCount(_projectId *big.Int) (*big.Int, error) {
+	return _Contracts.Contract.GetCandidateCount(&_Contracts.CallOpts, _projectId)
 }
 
-// GetCandidateCount is a free data retrieval call binding the contract method 0x30a56347.
+// GetCandidateCount is a free data retrieval call binding the contract method 0x26f6a2aa.
 //
-// Solidity: function getCandidateCount() view returns(uint256)
-func (_Contracts *ContractsCallerSession) GetCandidateCount() (*big.Int, error) {
-	return _Contracts.Contract.GetCandidateCount(&_Contracts.CallOpts)
+// Solidity: function getCandidateCount(uint256 _projectId) view returns(uint256)
+func (_Contracts *ContractsCallerSession) GetCandidateCount(_projectId *big.Int) (*big.Int, error) {
+	return _Contracts.Contract.GetCandidateCount(&_Contracts.CallOpts, _projectId)
 }
 
-// GetVotingStatus is a free data retrieval call binding the contract method 0x581c281c.
+// GetMyVoteDetail is a free data retrieval call binding the contract method 0x35ff2223.
 //
-// Solidity: function getVotingStatus() view returns(bool)
-func (_Contracts *ContractsCaller) GetVotingStatus(opts *bind.CallOpts) (bool, error) {
-	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "getVotingStatus")
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// GetVotingStatus is a free data retrieval call binding the contract method 0x581c281c.
-//
-// Solidity: function getVotingStatus() view returns(bool)
-func (_Contracts *ContractsSession) GetVotingStatus() (bool, error) {
-	return _Contracts.Contract.GetVotingStatus(&_Contracts.CallOpts)
-}
-
-// GetVotingStatus is a free data retrieval call binding the contract method 0x581c281c.
-//
-// Solidity: function getVotingStatus() view returns(bool)
-func (_Contracts *ContractsCallerSession) GetVotingStatus() (bool, error) {
-	return _Contracts.Contract.GetVotingStatus(&_Contracts.CallOpts)
-}
-
-// IsAdmin is a free data retrieval call binding the contract method 0x24d7806c.
-//
-// Solidity: function isAdmin(address _user) view returns(bool)
-func (_Contracts *ContractsCaller) IsAdmin(opts *bind.CallOpts, _user common.Address) (bool, error) {
-	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "isAdmin", _user)
-
-	if err != nil {
-		return *new(bool), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
-
-	return out0, err
-
-}
-
-// IsAdmin is a free data retrieval call binding the contract method 0x24d7806c.
-//
-// Solidity: function isAdmin(address _user) view returns(bool)
-func (_Contracts *ContractsSession) IsAdmin(_user common.Address) (bool, error) {
-	return _Contracts.Contract.IsAdmin(&_Contracts.CallOpts, _user)
-}
-
-// IsAdmin is a free data retrieval call binding the contract method 0x24d7806c.
-//
-// Solidity: function isAdmin(address _user) view returns(bool)
-func (_Contracts *ContractsCallerSession) IsAdmin(_user common.Address) (bool, error) {
-	return _Contracts.Contract.IsAdmin(&_Contracts.CallOpts, _user)
-}
-
-// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
-//
-// Solidity: function voters(address ) view returns(bool isRegistered, bool hasVoted)
-func (_Contracts *ContractsCaller) Voters(opts *bind.CallOpts, arg0 common.Address) (struct {
-	IsRegistered bool
-	HasVoted     bool
+// Solidity: function getMyVoteDetail(uint256 _projectId) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsCaller) GetMyVoteDetail(opts *bind.CallOpts, _projectId *big.Int) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
 }, error) {
 	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "voters", arg0)
+	err := _Contracts.contract.Call(opts, &out, "getMyVoteDetail", _projectId)
 
 	outstruct := new(struct {
-		IsRegistered bool
-		HasVoted     bool
+		CandidateId *big.Int
+		BlockHash   [32]byte
 	})
 	if err != nil {
 		return *outstruct, err
 	}
 
-	outstruct.IsRegistered = *abi.ConvertType(out[0], new(bool)).(*bool)
-	outstruct.HasVoted = *abi.ConvertType(out[1], new(bool)).(*bool)
+	outstruct.CandidateId = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.BlockHash = *abi.ConvertType(out[1], new([32]byte)).(*[32]byte)
 
 	return *outstruct, err
 
 }
 
-// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
+// GetMyVoteDetail is a free data retrieval call binding the contract method 0x35ff2223.
 //
-// Solidity: function voters(address ) view returns(bool isRegistered, bool hasVoted)
-func (_Contracts *ContractsSession) Voters(arg0 common.Address) (struct {
-	IsRegistered bool
-	HasVoted     bool
+// Solidity: function getMyVoteDetail(uint256 _projectId) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsSession) GetMyVoteDetail(_projectId *big.Int) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
 }, error) {
-	return _Contracts.Contract.Voters(&_Contracts.CallOpts, arg0)
+	return _Contracts.Contract.GetMyVoteDetail(&_Contracts.CallOpts, _projectId)
 }
 
-// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
+// GetMyVoteDetail is a free data retrieval call binding the contract method 0x35ff2223.
 //
-// Solidity: function voters(address ) view returns(bool isRegistered, bool hasVoted)
-func (_Contracts *ContractsCallerSession) Voters(arg0 common.Address) (struct {
-	IsRegistered bool
-	HasVoted     bool
+// Solidity: function getMyVoteDetail(uint256 _projectId) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsCallerSession) GetMyVoteDetail(_projectId *big.Int) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
 }, error) {
-	return _Contracts.Contract.Voters(&_Contracts.CallOpts, arg0)
+	return _Contracts.Contract.GetMyVoteDetail(&_Contracts.CallOpts, _projectId)
 }
 
-// VotingOpen is a free data retrieval call binding the contract method 0xa95824b4.
+// GetProjectInfo is a free data retrieval call binding the contract method 0xfabf5968.
 //
-// Solidity: function votingOpen() view returns(bool)
-func (_Contracts *ContractsCaller) VotingOpen(opts *bind.CallOpts) (bool, error) {
+// Solidity: function getProjectInfo(uint256 _projectId) view returns(uint256, string, bool)
+func (_Contracts *ContractsCaller) GetProjectInfo(opts *bind.CallOpts, _projectId *big.Int) (*big.Int, string, bool, error) {
 	var out []interface{}
-	err := _Contracts.contract.Call(opts, &out, "votingOpen")
+	err := _Contracts.contract.Call(opts, &out, "getProjectInfo", _projectId)
+
+	if err != nil {
+		return *new(*big.Int), *new(string), *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out1 := *abi.ConvertType(out[1], new(string)).(*string)
+	out2 := *abi.ConvertType(out[2], new(bool)).(*bool)
+
+	return out0, out1, out2, err
+
+}
+
+// GetProjectInfo is a free data retrieval call binding the contract method 0xfabf5968.
+//
+// Solidity: function getProjectInfo(uint256 _projectId) view returns(uint256, string, bool)
+func (_Contracts *ContractsSession) GetProjectInfo(_projectId *big.Int) (*big.Int, string, bool, error) {
+	return _Contracts.Contract.GetProjectInfo(&_Contracts.CallOpts, _projectId)
+}
+
+// GetProjectInfo is a free data retrieval call binding the contract method 0xfabf5968.
+//
+// Solidity: function getProjectInfo(uint256 _projectId) view returns(uint256, string, bool)
+func (_Contracts *ContractsCallerSession) GetProjectInfo(_projectId *big.Int) (*big.Int, string, bool, error) {
+	return _Contracts.Contract.GetProjectInfo(&_Contracts.CallOpts, _projectId)
+}
+
+// HasUserVoted is a free data retrieval call binding the contract method 0xdc296ae1.
+//
+// Solidity: function hasUserVoted(uint256 _projectId, address _user) view returns(bool)
+func (_Contracts *ContractsCaller) HasUserVoted(opts *bind.CallOpts, _projectId *big.Int, _user common.Address) (bool, error) {
+	var out []interface{}
+	err := _Contracts.contract.Call(opts, &out, "hasUserVoted", _projectId, _user)
 
 	if err != nil {
 		return *new(bool), err
@@ -416,60 +414,209 @@ func (_Contracts *ContractsCaller) VotingOpen(opts *bind.CallOpts) (bool, error)
 
 }
 
-// VotingOpen is a free data retrieval call binding the contract method 0xa95824b4.
+// HasUserVoted is a free data retrieval call binding the contract method 0xdc296ae1.
 //
-// Solidity: function votingOpen() view returns(bool)
-func (_Contracts *ContractsSession) VotingOpen() (bool, error) {
-	return _Contracts.Contract.VotingOpen(&_Contracts.CallOpts)
+// Solidity: function hasUserVoted(uint256 _projectId, address _user) view returns(bool)
+func (_Contracts *ContractsSession) HasUserVoted(_projectId *big.Int, _user common.Address) (bool, error) {
+	return _Contracts.Contract.HasUserVoted(&_Contracts.CallOpts, _projectId, _user)
 }
 
-// VotingOpen is a free data retrieval call binding the contract method 0xa95824b4.
+// HasUserVoted is a free data retrieval call binding the contract method 0xdc296ae1.
 //
-// Solidity: function votingOpen() view returns(bool)
-func (_Contracts *ContractsCallerSession) VotingOpen() (bool, error) {
-	return _Contracts.Contract.VotingOpen(&_Contracts.CallOpts)
+// Solidity: function hasUserVoted(uint256 _projectId, address _user) view returns(bool)
+func (_Contracts *ContractsCallerSession) HasUserVoted(_projectId *big.Int, _user common.Address) (bool, error) {
+	return _Contracts.Contract.HasUserVoted(&_Contracts.CallOpts, _projectId, _user)
 }
 
-// AddCandidate is a paid mutator transaction binding the contract method 0x462e91ec.
+// ProjectCount is a free data retrieval call binding the contract method 0x36fbad26.
 //
-// Solidity: function addCandidate(string _name) returns()
-func (_Contracts *ContractsTransactor) AddCandidate(opts *bind.TransactOpts, _name string) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "addCandidate", _name)
+// Solidity: function projectCount() view returns(uint256)
+func (_Contracts *ContractsCaller) ProjectCount(opts *bind.CallOpts) (*big.Int, error) {
+	var out []interface{}
+	err := _Contracts.contract.Call(opts, &out, "projectCount")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
 }
 
-// AddCandidate is a paid mutator transaction binding the contract method 0x462e91ec.
+// ProjectCount is a free data retrieval call binding the contract method 0x36fbad26.
 //
-// Solidity: function addCandidate(string _name) returns()
-func (_Contracts *ContractsSession) AddCandidate(_name string) (*types.Transaction, error) {
-	return _Contracts.Contract.AddCandidate(&_Contracts.TransactOpts, _name)
+// Solidity: function projectCount() view returns(uint256)
+func (_Contracts *ContractsSession) ProjectCount() (*big.Int, error) {
+	return _Contracts.Contract.ProjectCount(&_Contracts.CallOpts)
 }
 
-// AddCandidate is a paid mutator transaction binding the contract method 0x462e91ec.
+// ProjectCount is a free data retrieval call binding the contract method 0x36fbad26.
 //
-// Solidity: function addCandidate(string _name) returns()
-func (_Contracts *ContractsTransactorSession) AddCandidate(_name string) (*types.Transaction, error) {
-	return _Contracts.Contract.AddCandidate(&_Contracts.TransactOpts, _name)
+// Solidity: function projectCount() view returns(uint256)
+func (_Contracts *ContractsCallerSession) ProjectCount() (*big.Int, error) {
+	return _Contracts.Contract.ProjectCount(&_Contracts.CallOpts)
 }
 
-// EndVoting is a paid mutator transaction binding the contract method 0xc3403ddf.
+// VoteDetails is a free data retrieval call binding the contract method 0x59191ba1.
 //
-// Solidity: function endVoting() returns()
-func (_Contracts *ContractsTransactor) EndVoting(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "endVoting")
+// Solidity: function voteDetails(uint256 , address ) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsCaller) VoteDetails(opts *bind.CallOpts, arg0 *big.Int, arg1 common.Address) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
+}, error) {
+	var out []interface{}
+	err := _Contracts.contract.Call(opts, &out, "voteDetails", arg0, arg1)
+
+	outstruct := new(struct {
+		CandidateId *big.Int
+		BlockHash   [32]byte
+	})
+	if err != nil {
+		return *outstruct, err
+	}
+
+	outstruct.CandidateId = *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	outstruct.BlockHash = *abi.ConvertType(out[1], new([32]byte)).(*[32]byte)
+
+	return *outstruct, err
+
 }
 
-// EndVoting is a paid mutator transaction binding the contract method 0xc3403ddf.
+// VoteDetails is a free data retrieval call binding the contract method 0x59191ba1.
 //
-// Solidity: function endVoting() returns()
-func (_Contracts *ContractsSession) EndVoting() (*types.Transaction, error) {
-	return _Contracts.Contract.EndVoting(&_Contracts.TransactOpts)
+// Solidity: function voteDetails(uint256 , address ) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsSession) VoteDetails(arg0 *big.Int, arg1 common.Address) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
+}, error) {
+	return _Contracts.Contract.VoteDetails(&_Contracts.CallOpts, arg0, arg1)
 }
 
-// EndVoting is a paid mutator transaction binding the contract method 0xc3403ddf.
+// VoteDetails is a free data retrieval call binding the contract method 0x59191ba1.
 //
-// Solidity: function endVoting() returns()
-func (_Contracts *ContractsTransactorSession) EndVoting() (*types.Transaction, error) {
-	return _Contracts.Contract.EndVoting(&_Contracts.TransactOpts)
+// Solidity: function voteDetails(uint256 , address ) view returns(uint256 candidateId, bytes32 blockHash)
+func (_Contracts *ContractsCallerSession) VoteDetails(arg0 *big.Int, arg1 common.Address) (struct {
+	CandidateId *big.Int
+	BlockHash   [32]byte
+}, error) {
+	return _Contracts.Contract.VoteDetails(&_Contracts.CallOpts, arg0, arg1)
+}
+
+// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
+//
+// Solidity: function voters(address ) view returns(bool isRegistered)
+func (_Contracts *ContractsCaller) Voters(opts *bind.CallOpts, arg0 common.Address) (bool, error) {
+	var out []interface{}
+	err := _Contracts.contract.Call(opts, &out, "voters", arg0)
+
+	if err != nil {
+		return *new(bool), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(bool)).(*bool)
+
+	return out0, err
+
+}
+
+// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
+//
+// Solidity: function voters(address ) view returns(bool isRegistered)
+func (_Contracts *ContractsSession) Voters(arg0 common.Address) (bool, error) {
+	return _Contracts.Contract.Voters(&_Contracts.CallOpts, arg0)
+}
+
+// Voters is a free data retrieval call binding the contract method 0xa3ec138d.
+//
+// Solidity: function voters(address ) view returns(bool isRegistered)
+func (_Contracts *ContractsCallerSession) Voters(arg0 common.Address) (bool, error) {
+	return _Contracts.Contract.Voters(&_Contracts.CallOpts, arg0)
+}
+
+// AddCandidate is a paid mutator transaction binding the contract method 0xce4a2743.
+//
+// Solidity: function addCandidate(uint256 _projectId, string _name, string _imageUrl, string _candidateDescription) returns()
+func (_Contracts *ContractsTransactor) AddCandidate(opts *bind.TransactOpts, _projectId *big.Int, _name string, _imageUrl string, _candidateDescription string) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "addCandidate", _projectId, _name, _imageUrl, _candidateDescription)
+}
+
+// AddCandidate is a paid mutator transaction binding the contract method 0xce4a2743.
+//
+// Solidity: function addCandidate(uint256 _projectId, string _name, string _imageUrl, string _candidateDescription) returns()
+func (_Contracts *ContractsSession) AddCandidate(_projectId *big.Int, _name string, _imageUrl string, _candidateDescription string) (*types.Transaction, error) {
+	return _Contracts.Contract.AddCandidate(&_Contracts.TransactOpts, _projectId, _name, _imageUrl, _candidateDescription)
+}
+
+// AddCandidate is a paid mutator transaction binding the contract method 0xce4a2743.
+//
+// Solidity: function addCandidate(uint256 _projectId, string _name, string _imageUrl, string _candidateDescription) returns()
+func (_Contracts *ContractsTransactorSession) AddCandidate(_projectId *big.Int, _name string, _imageUrl string, _candidateDescription string) (*types.Transaction, error) {
+	return _Contracts.Contract.AddCandidate(&_Contracts.TransactOpts, _projectId, _name, _imageUrl, _candidateDescription)
+}
+
+// CreateVotingProject is a paid mutator transaction binding the contract method 0xcde5fdca.
+//
+// Solidity: function createVotingProject(string _description) returns()
+func (_Contracts *ContractsTransactor) CreateVotingProject(opts *bind.TransactOpts, _description string) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "createVotingProject", _description)
+}
+
+// CreateVotingProject is a paid mutator transaction binding the contract method 0xcde5fdca.
+//
+// Solidity: function createVotingProject(string _description) returns()
+func (_Contracts *ContractsSession) CreateVotingProject(_description string) (*types.Transaction, error) {
+	return _Contracts.Contract.CreateVotingProject(&_Contracts.TransactOpts, _description)
+}
+
+// CreateVotingProject is a paid mutator transaction binding the contract method 0xcde5fdca.
+//
+// Solidity: function createVotingProject(string _description) returns()
+func (_Contracts *ContractsTransactorSession) CreateVotingProject(_description string) (*types.Transaction, error) {
+	return _Contracts.Contract.CreateVotingProject(&_Contracts.TransactOpts, _description)
+}
+
+// DeleteCandidate is a paid mutator transaction binding the contract method 0xcf4a6060.
+//
+// Solidity: function deleteCandidate(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsTransactor) DeleteCandidate(opts *bind.TransactOpts, _projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "deleteCandidate", _projectId, _candidateId)
+}
+
+// DeleteCandidate is a paid mutator transaction binding the contract method 0xcf4a6060.
+//
+// Solidity: function deleteCandidate(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsSession) DeleteCandidate(_projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.DeleteCandidate(&_Contracts.TransactOpts, _projectId, _candidateId)
+}
+
+// DeleteCandidate is a paid mutator transaction binding the contract method 0xcf4a6060.
+//
+// Solidity: function deleteCandidate(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsTransactorSession) DeleteCandidate(_projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.DeleteCandidate(&_Contracts.TransactOpts, _projectId, _candidateId)
+}
+
+// EndVotingForProject is a paid mutator transaction binding the contract method 0xa8ec9f15.
+//
+// Solidity: function endVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsTransactor) EndVotingForProject(opts *bind.TransactOpts, _projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "endVotingForProject", _projectId)
+}
+
+// EndVotingForProject is a paid mutator transaction binding the contract method 0xa8ec9f15.
+//
+// Solidity: function endVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsSession) EndVotingForProject(_projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.EndVotingForProject(&_Contracts.TransactOpts, _projectId)
+}
+
+// EndVotingForProject is a paid mutator transaction binding the contract method 0xa8ec9f15.
+//
+// Solidity: function endVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsTransactorSession) EndVotingForProject(_projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.EndVotingForProject(&_Contracts.TransactOpts, _projectId)
 }
 
 // RegisterVoter is a paid mutator transaction binding the contract method 0x38db6dd3.
@@ -493,46 +640,67 @@ func (_Contracts *ContractsTransactorSession) RegisterVoter(_voter common.Addres
 	return _Contracts.Contract.RegisterVoter(&_Contracts.TransactOpts, _voter)
 }
 
-// StartVoting is a paid mutator transaction binding the contract method 0x1ec6b60a.
+// StartVotingForProject is a paid mutator transaction binding the contract method 0x4f91c2a4.
 //
-// Solidity: function startVoting() returns()
-func (_Contracts *ContractsTransactor) StartVoting(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "startVoting")
+// Solidity: function startVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsTransactor) StartVotingForProject(opts *bind.TransactOpts, _projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "startVotingForProject", _projectId)
 }
 
-// StartVoting is a paid mutator transaction binding the contract method 0x1ec6b60a.
+// StartVotingForProject is a paid mutator transaction binding the contract method 0x4f91c2a4.
 //
-// Solidity: function startVoting() returns()
-func (_Contracts *ContractsSession) StartVoting() (*types.Transaction, error) {
-	return _Contracts.Contract.StartVoting(&_Contracts.TransactOpts)
+// Solidity: function startVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsSession) StartVotingForProject(_projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.StartVotingForProject(&_Contracts.TransactOpts, _projectId)
 }
 
-// StartVoting is a paid mutator transaction binding the contract method 0x1ec6b60a.
+// StartVotingForProject is a paid mutator transaction binding the contract method 0x4f91c2a4.
 //
-// Solidity: function startVoting() returns()
-func (_Contracts *ContractsTransactorSession) StartVoting() (*types.Transaction, error) {
-	return _Contracts.Contract.StartVoting(&_Contracts.TransactOpts)
+// Solidity: function startVotingForProject(uint256 _projectId) returns()
+func (_Contracts *ContractsTransactorSession) StartVotingForProject(_projectId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.StartVotingForProject(&_Contracts.TransactOpts, _projectId)
 }
 
-// Vote is a paid mutator transaction binding the contract method 0x0121b93f.
+// UpdateCandidate is a paid mutator transaction binding the contract method 0x1c4e8b76.
 //
-// Solidity: function vote(uint256 _candidateId) returns()
-func (_Contracts *ContractsTransactor) Vote(opts *bind.TransactOpts, _candidateId *big.Int) (*types.Transaction, error) {
-	return _Contracts.contract.Transact(opts, "vote", _candidateId)
+// Solidity: function updateCandidate(uint256 _projectId, uint256 _candidateId, string _newName, string _newImageUrl, string _newCandidateDescription) returns()
+func (_Contracts *ContractsTransactor) UpdateCandidate(opts *bind.TransactOpts, _projectId *big.Int, _candidateId *big.Int, _newName string, _newImageUrl string, _newCandidateDescription string) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "updateCandidate", _projectId, _candidateId, _newName, _newImageUrl, _newCandidateDescription)
 }
 
-// Vote is a paid mutator transaction binding the contract method 0x0121b93f.
+// UpdateCandidate is a paid mutator transaction binding the contract method 0x1c4e8b76.
 //
-// Solidity: function vote(uint256 _candidateId) returns()
-func (_Contracts *ContractsSession) Vote(_candidateId *big.Int) (*types.Transaction, error) {
-	return _Contracts.Contract.Vote(&_Contracts.TransactOpts, _candidateId)
+// Solidity: function updateCandidate(uint256 _projectId, uint256 _candidateId, string _newName, string _newImageUrl, string _newCandidateDescription) returns()
+func (_Contracts *ContractsSession) UpdateCandidate(_projectId *big.Int, _candidateId *big.Int, _newName string, _newImageUrl string, _newCandidateDescription string) (*types.Transaction, error) {
+	return _Contracts.Contract.UpdateCandidate(&_Contracts.TransactOpts, _projectId, _candidateId, _newName, _newImageUrl, _newCandidateDescription)
 }
 
-// Vote is a paid mutator transaction binding the contract method 0x0121b93f.
+// UpdateCandidate is a paid mutator transaction binding the contract method 0x1c4e8b76.
 //
-// Solidity: function vote(uint256 _candidateId) returns()
-func (_Contracts *ContractsTransactorSession) Vote(_candidateId *big.Int) (*types.Transaction, error) {
-	return _Contracts.Contract.Vote(&_Contracts.TransactOpts, _candidateId)
+// Solidity: function updateCandidate(uint256 _projectId, uint256 _candidateId, string _newName, string _newImageUrl, string _newCandidateDescription) returns()
+func (_Contracts *ContractsTransactorSession) UpdateCandidate(_projectId *big.Int, _candidateId *big.Int, _newName string, _newImageUrl string, _newCandidateDescription string) (*types.Transaction, error) {
+	return _Contracts.Contract.UpdateCandidate(&_Contracts.TransactOpts, _projectId, _candidateId, _newName, _newImageUrl, _newCandidateDescription)
+}
+
+// Vote is a paid mutator transaction binding the contract method 0xb384abef.
+//
+// Solidity: function vote(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsTransactor) Vote(opts *bind.TransactOpts, _projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.contract.Transact(opts, "vote", _projectId, _candidateId)
+}
+
+// Vote is a paid mutator transaction binding the contract method 0xb384abef.
+//
+// Solidity: function vote(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsSession) Vote(_projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.Vote(&_Contracts.TransactOpts, _projectId, _candidateId)
+}
+
+// Vote is a paid mutator transaction binding the contract method 0xb384abef.
+//
+// Solidity: function vote(uint256 _projectId, uint256 _candidateId) returns()
+func (_Contracts *ContractsTransactorSession) Vote(_projectId *big.Int, _candidateId *big.Int) (*types.Transaction, error) {
+	return _Contracts.Contract.Vote(&_Contracts.TransactOpts, _projectId, _candidateId)
 }
 
 // ContractsCandidateAddedIterator is returned from FilterCandidateAdded and is used to iterate over the raw logs and unpacked data for CandidateAdded events raised by the Contracts contract.
@@ -604,14 +772,17 @@ func (it *ContractsCandidateAddedIterator) Close() error {
 
 // ContractsCandidateAdded represents a CandidateAdded event raised by the Contracts contract.
 type ContractsCandidateAdded struct {
-	CandidateId *big.Int
-	Name        string
-	Raw         types.Log // Blockchain specific contextual infos
+	ProjectId            *big.Int
+	CandidateId          *big.Int
+	Name                 string
+	ImageUrl             string
+	CandidateDescription string
+	Raw                  types.Log // Blockchain specific contextual infos
 }
 
-// FilterCandidateAdded is a free log retrieval operation binding the contract event 0xe83b2a43e7e82d975c8a0a6d2f045153c869e111136a34d1889ab7b598e396a3.
+// FilterCandidateAdded is a free log retrieval operation binding the contract event 0x5311339e5c8f602abcad009c6ae5047e68f731a4f05ebeff0a4496784128ecd3.
 //
-// Solidity: event CandidateAdded(uint256 candidateId, string name)
+// Solidity: event CandidateAdded(uint256 projectId, uint256 candidateId, string name, string imageUrl, string candidateDescription)
 func (_Contracts *ContractsFilterer) FilterCandidateAdded(opts *bind.FilterOpts) (*ContractsCandidateAddedIterator, error) {
 
 	logs, sub, err := _Contracts.contract.FilterLogs(opts, "CandidateAdded")
@@ -621,9 +792,9 @@ func (_Contracts *ContractsFilterer) FilterCandidateAdded(opts *bind.FilterOpts)
 	return &ContractsCandidateAddedIterator{contract: _Contracts.contract, event: "CandidateAdded", logs: logs, sub: sub}, nil
 }
 
-// WatchCandidateAdded is a free log subscription operation binding the contract event 0xe83b2a43e7e82d975c8a0a6d2f045153c869e111136a34d1889ab7b598e396a3.
+// WatchCandidateAdded is a free log subscription operation binding the contract event 0x5311339e5c8f602abcad009c6ae5047e68f731a4f05ebeff0a4496784128ecd3.
 //
-// Solidity: event CandidateAdded(uint256 candidateId, string name)
+// Solidity: event CandidateAdded(uint256 projectId, uint256 candidateId, string name, string imageUrl, string candidateDescription)
 func (_Contracts *ContractsFilterer) WatchCandidateAdded(opts *bind.WatchOpts, sink chan<- *ContractsCandidateAdded) (event.Subscription, error) {
 
 	logs, sub, err := _Contracts.contract.WatchLogs(opts, "CandidateAdded")
@@ -658,12 +829,285 @@ func (_Contracts *ContractsFilterer) WatchCandidateAdded(opts *bind.WatchOpts, s
 	}), nil
 }
 
-// ParseCandidateAdded is a log parse operation binding the contract event 0xe83b2a43e7e82d975c8a0a6d2f045153c869e111136a34d1889ab7b598e396a3.
+// ParseCandidateAdded is a log parse operation binding the contract event 0x5311339e5c8f602abcad009c6ae5047e68f731a4f05ebeff0a4496784128ecd3.
 //
-// Solidity: event CandidateAdded(uint256 candidateId, string name)
+// Solidity: event CandidateAdded(uint256 projectId, uint256 candidateId, string name, string imageUrl, string candidateDescription)
 func (_Contracts *ContractsFilterer) ParseCandidateAdded(log types.Log) (*ContractsCandidateAdded, error) {
 	event := new(ContractsCandidateAdded)
 	if err := _Contracts.contract.UnpackLog(event, "CandidateAdded", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractsCandidateDeletedIterator is returned from FilterCandidateDeleted and is used to iterate over the raw logs and unpacked data for CandidateDeleted events raised by the Contracts contract.
+type ContractsCandidateDeletedIterator struct {
+	Event *ContractsCandidateDeleted // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractsCandidateDeletedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractsCandidateDeleted)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractsCandidateDeleted)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractsCandidateDeletedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractsCandidateDeletedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractsCandidateDeleted represents a CandidateDeleted event raised by the Contracts contract.
+type ContractsCandidateDeleted struct {
+	ProjectId   *big.Int
+	CandidateId *big.Int
+	Raw         types.Log // Blockchain specific contextual infos
+}
+
+// FilterCandidateDeleted is a free log retrieval operation binding the contract event 0x48bf3ef4944e20b74a7ae7804d664a8e9ba28141c5fc26163c87f7fbc9e90e2f.
+//
+// Solidity: event CandidateDeleted(uint256 projectId, uint256 candidateId)
+func (_Contracts *ContractsFilterer) FilterCandidateDeleted(opts *bind.FilterOpts) (*ContractsCandidateDeletedIterator, error) {
+
+	logs, sub, err := _Contracts.contract.FilterLogs(opts, "CandidateDeleted")
+	if err != nil {
+		return nil, err
+	}
+	return &ContractsCandidateDeletedIterator{contract: _Contracts.contract, event: "CandidateDeleted", logs: logs, sub: sub}, nil
+}
+
+// WatchCandidateDeleted is a free log subscription operation binding the contract event 0x48bf3ef4944e20b74a7ae7804d664a8e9ba28141c5fc26163c87f7fbc9e90e2f.
+//
+// Solidity: event CandidateDeleted(uint256 projectId, uint256 candidateId)
+func (_Contracts *ContractsFilterer) WatchCandidateDeleted(opts *bind.WatchOpts, sink chan<- *ContractsCandidateDeleted) (event.Subscription, error) {
+
+	logs, sub, err := _Contracts.contract.WatchLogs(opts, "CandidateDeleted")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractsCandidateDeleted)
+				if err := _Contracts.contract.UnpackLog(event, "CandidateDeleted", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseCandidateDeleted is a log parse operation binding the contract event 0x48bf3ef4944e20b74a7ae7804d664a8e9ba28141c5fc26163c87f7fbc9e90e2f.
+//
+// Solidity: event CandidateDeleted(uint256 projectId, uint256 candidateId)
+func (_Contracts *ContractsFilterer) ParseCandidateDeleted(log types.Log) (*ContractsCandidateDeleted, error) {
+	event := new(ContractsCandidateDeleted)
+	if err := _Contracts.contract.UnpackLog(event, "CandidateDeleted", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractsCandidateUpdatedIterator is returned from FilterCandidateUpdated and is used to iterate over the raw logs and unpacked data for CandidateUpdated events raised by the Contracts contract.
+type ContractsCandidateUpdatedIterator struct {
+	Event *ContractsCandidateUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractsCandidateUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractsCandidateUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractsCandidateUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractsCandidateUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractsCandidateUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractsCandidateUpdated represents a CandidateUpdated event raised by the Contracts contract.
+type ContractsCandidateUpdated struct {
+	ProjectId               *big.Int
+	CandidateId             *big.Int
+	NewName                 string
+	NewImageUrl             string
+	NewCandidateDescription string
+	Raw                     types.Log // Blockchain specific contextual infos
+}
+
+// FilterCandidateUpdated is a free log retrieval operation binding the contract event 0x438b97487e2ce2ab75b5fc681e52fc9d2ed2a63de9588b6b970afb661dbdc6f0.
+//
+// Solidity: event CandidateUpdated(uint256 projectId, uint256 candidateId, string newName, string newImageUrl, string newCandidateDescription)
+func (_Contracts *ContractsFilterer) FilterCandidateUpdated(opts *bind.FilterOpts) (*ContractsCandidateUpdatedIterator, error) {
+
+	logs, sub, err := _Contracts.contract.FilterLogs(opts, "CandidateUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return &ContractsCandidateUpdatedIterator{contract: _Contracts.contract, event: "CandidateUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchCandidateUpdated is a free log subscription operation binding the contract event 0x438b97487e2ce2ab75b5fc681e52fc9d2ed2a63de9588b6b970afb661dbdc6f0.
+//
+// Solidity: event CandidateUpdated(uint256 projectId, uint256 candidateId, string newName, string newImageUrl, string newCandidateDescription)
+func (_Contracts *ContractsFilterer) WatchCandidateUpdated(opts *bind.WatchOpts, sink chan<- *ContractsCandidateUpdated) (event.Subscription, error) {
+
+	logs, sub, err := _Contracts.contract.WatchLogs(opts, "CandidateUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractsCandidateUpdated)
+				if err := _Contracts.contract.UnpackLog(event, "CandidateUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseCandidateUpdated is a log parse operation binding the contract event 0x438b97487e2ce2ab75b5fc681e52fc9d2ed2a63de9588b6b970afb661dbdc6f0.
+//
+// Solidity: event CandidateUpdated(uint256 projectId, uint256 candidateId, string newName, string newImageUrl, string newCandidateDescription)
+func (_Contracts *ContractsFilterer) ParseCandidateUpdated(log types.Log) (*ContractsCandidateUpdated, error) {
+	event := new(ContractsCandidateUpdated)
+	if err := _Contracts.contract.UnpackLog(event, "CandidateUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -740,13 +1184,15 @@ func (it *ContractsVoteCastIterator) Close() error {
 // ContractsVoteCast represents a VoteCast event raised by the Contracts contract.
 type ContractsVoteCast struct {
 	Voter       common.Address
+	ProjectId   *big.Int
 	CandidateId *big.Int
+	BlockHash   [32]byte
 	Raw         types.Log // Blockchain specific contextual infos
 }
 
-// FilterVoteCast is a free log retrieval operation binding the contract event 0xa36cc2bebb74db33e9f88110a07ef56e1b31b24b4c4f51b54b1664266e29f45b.
+// FilterVoteCast is a free log retrieval operation binding the contract event 0x07948c9515930cad4eac944a15a78a009b2a6db5bbe06a7560e7a7348825bb72.
 //
-// Solidity: event VoteCast(address indexed voter, uint256 candidateId)
+// Solidity: event VoteCast(address indexed voter, uint256 projectId, uint256 candidateId, bytes32 blockHash)
 func (_Contracts *ContractsFilterer) FilterVoteCast(opts *bind.FilterOpts, voter []common.Address) (*ContractsVoteCastIterator, error) {
 
 	var voterRule []interface{}
@@ -761,9 +1207,9 @@ func (_Contracts *ContractsFilterer) FilterVoteCast(opts *bind.FilterOpts, voter
 	return &ContractsVoteCastIterator{contract: _Contracts.contract, event: "VoteCast", logs: logs, sub: sub}, nil
 }
 
-// WatchVoteCast is a free log subscription operation binding the contract event 0xa36cc2bebb74db33e9f88110a07ef56e1b31b24b4c4f51b54b1664266e29f45b.
+// WatchVoteCast is a free log subscription operation binding the contract event 0x07948c9515930cad4eac944a15a78a009b2a6db5bbe06a7560e7a7348825bb72.
 //
-// Solidity: event VoteCast(address indexed voter, uint256 candidateId)
+// Solidity: event VoteCast(address indexed voter, uint256 projectId, uint256 candidateId, bytes32 blockHash)
 func (_Contracts *ContractsFilterer) WatchVoteCast(opts *bind.WatchOpts, sink chan<- *ContractsVoteCast, voter []common.Address) (event.Subscription, error) {
 
 	var voterRule []interface{}
@@ -803,9 +1249,9 @@ func (_Contracts *ContractsFilterer) WatchVoteCast(opts *bind.WatchOpts, sink ch
 	}), nil
 }
 
-// ParseVoteCast is a log parse operation binding the contract event 0xa36cc2bebb74db33e9f88110a07ef56e1b31b24b4c4f51b54b1664266e29f45b.
+// ParseVoteCast is a log parse operation binding the contract event 0x07948c9515930cad4eac944a15a78a009b2a6db5bbe06a7560e7a7348825bb72.
 //
-// Solidity: event VoteCast(address indexed voter, uint256 candidateId)
+// Solidity: event VoteCast(address indexed voter, uint256 projectId, uint256 candidateId, bytes32 blockHash)
 func (_Contracts *ContractsFilterer) ParseVoteCast(log types.Log) (*ContractsVoteCast, error) {
 	event := new(ContractsVoteCast)
 	if err := _Contracts.contract.UnpackLog(event, "VoteCast", log); err != nil {
@@ -949,9 +1395,9 @@ func (_Contracts *ContractsFilterer) ParseVoterRegistered(log types.Log) (*Contr
 	return event, nil
 }
 
-// ContractsVotingEndedIterator is returned from FilterVotingEnded and is used to iterate over the raw logs and unpacked data for VotingEnded events raised by the Contracts contract.
-type ContractsVotingEndedIterator struct {
-	Event *ContractsVotingEnded // Event containing the contract specifics and raw log
+// ContractsVotingProjectCreatedIterator is returned from FilterVotingProjectCreated and is used to iterate over the raw logs and unpacked data for VotingProjectCreated events raised by the Contracts contract.
+type ContractsVotingProjectCreatedIterator struct {
+	Event *ContractsVotingProjectCreated // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -965,7 +1411,7 @@ type ContractsVotingEndedIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *ContractsVotingEndedIterator) Next() bool {
+func (it *ContractsVotingProjectCreatedIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -974,7 +1420,7 @@ func (it *ContractsVotingEndedIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(ContractsVotingEnded)
+			it.Event = new(ContractsVotingProjectCreated)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -989,7 +1435,7 @@ func (it *ContractsVotingEndedIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(ContractsVotingEnded)
+		it.Event = new(ContractsVotingProjectCreated)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -1005,40 +1451,42 @@ func (it *ContractsVotingEndedIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractsVotingEndedIterator) Error() error {
+func (it *ContractsVotingProjectCreatedIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *ContractsVotingEndedIterator) Close() error {
+func (it *ContractsVotingProjectCreatedIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// ContractsVotingEnded represents a VotingEnded event raised by the Contracts contract.
-type ContractsVotingEnded struct {
-	Raw types.Log // Blockchain specific contextual infos
+// ContractsVotingProjectCreated represents a VotingProjectCreated event raised by the Contracts contract.
+type ContractsVotingProjectCreated struct {
+	ProjectId   *big.Int
+	Description string
+	Raw         types.Log // Blockchain specific contextual infos
 }
 
-// FilterVotingEnded is a free log retrieval operation binding the contract event 0x7a19ed057db79e3c2fa0b97a54b43bef4fce74b31bb6c01af514b9a18a7f70ab.
+// FilterVotingProjectCreated is a free log retrieval operation binding the contract event 0x837f3d36cc844e134d5c0d833ddd4313bb3c42964532da67acb125af4c9ef02c.
 //
-// Solidity: event VotingEnded()
-func (_Contracts *ContractsFilterer) FilterVotingEnded(opts *bind.FilterOpts) (*ContractsVotingEndedIterator, error) {
+// Solidity: event VotingProjectCreated(uint256 projectId, string description)
+func (_Contracts *ContractsFilterer) FilterVotingProjectCreated(opts *bind.FilterOpts) (*ContractsVotingProjectCreatedIterator, error) {
 
-	logs, sub, err := _Contracts.contract.FilterLogs(opts, "VotingEnded")
+	logs, sub, err := _Contracts.contract.FilterLogs(opts, "VotingProjectCreated")
 	if err != nil {
 		return nil, err
 	}
-	return &ContractsVotingEndedIterator{contract: _Contracts.contract, event: "VotingEnded", logs: logs, sub: sub}, nil
+	return &ContractsVotingProjectCreatedIterator{contract: _Contracts.contract, event: "VotingProjectCreated", logs: logs, sub: sub}, nil
 }
 
-// WatchVotingEnded is a free log subscription operation binding the contract event 0x7a19ed057db79e3c2fa0b97a54b43bef4fce74b31bb6c01af514b9a18a7f70ab.
+// WatchVotingProjectCreated is a free log subscription operation binding the contract event 0x837f3d36cc844e134d5c0d833ddd4313bb3c42964532da67acb125af4c9ef02c.
 //
-// Solidity: event VotingEnded()
-func (_Contracts *ContractsFilterer) WatchVotingEnded(opts *bind.WatchOpts, sink chan<- *ContractsVotingEnded) (event.Subscription, error) {
+// Solidity: event VotingProjectCreated(uint256 projectId, string description)
+func (_Contracts *ContractsFilterer) WatchVotingProjectCreated(opts *bind.WatchOpts, sink chan<- *ContractsVotingProjectCreated) (event.Subscription, error) {
 
-	logs, sub, err := _Contracts.contract.WatchLogs(opts, "VotingEnded")
+	logs, sub, err := _Contracts.contract.WatchLogs(opts, "VotingProjectCreated")
 	if err != nil {
 		return nil, err
 	}
@@ -1048,8 +1496,8 @@ func (_Contracts *ContractsFilterer) WatchVotingEnded(opts *bind.WatchOpts, sink
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(ContractsVotingEnded)
-				if err := _Contracts.contract.UnpackLog(event, "VotingEnded", log); err != nil {
+				event := new(ContractsVotingProjectCreated)
+				if err := _Contracts.contract.UnpackLog(event, "VotingProjectCreated", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1070,21 +1518,21 @@ func (_Contracts *ContractsFilterer) WatchVotingEnded(opts *bind.WatchOpts, sink
 	}), nil
 }
 
-// ParseVotingEnded is a log parse operation binding the contract event 0x7a19ed057db79e3c2fa0b97a54b43bef4fce74b31bb6c01af514b9a18a7f70ab.
+// ParseVotingProjectCreated is a log parse operation binding the contract event 0x837f3d36cc844e134d5c0d833ddd4313bb3c42964532da67acb125af4c9ef02c.
 //
-// Solidity: event VotingEnded()
-func (_Contracts *ContractsFilterer) ParseVotingEnded(log types.Log) (*ContractsVotingEnded, error) {
-	event := new(ContractsVotingEnded)
-	if err := _Contracts.contract.UnpackLog(event, "VotingEnded", log); err != nil {
+// Solidity: event VotingProjectCreated(uint256 projectId, string description)
+func (_Contracts *ContractsFilterer) ParseVotingProjectCreated(log types.Log) (*ContractsVotingProjectCreated, error) {
+	event := new(ContractsVotingProjectCreated)
+	if err := _Contracts.contract.UnpackLog(event, "VotingProjectCreated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
 	return event, nil
 }
 
-// ContractsVotingStartedIterator is returned from FilterVotingStarted and is used to iterate over the raw logs and unpacked data for VotingStarted events raised by the Contracts contract.
-type ContractsVotingStartedIterator struct {
-	Event *ContractsVotingStarted // Event containing the contract specifics and raw log
+// ContractsVotingProjectEndedIterator is returned from FilterVotingProjectEnded and is used to iterate over the raw logs and unpacked data for VotingProjectEnded events raised by the Contracts contract.
+type ContractsVotingProjectEndedIterator struct {
+	Event *ContractsVotingProjectEnded // Event containing the contract specifics and raw log
 
 	contract *bind.BoundContract // Generic contract to use for unpacking event data
 	event    string              // Event name to use for unpacking event data
@@ -1098,7 +1546,7 @@ type ContractsVotingStartedIterator struct {
 // Next advances the iterator to the subsequent event, returning whether there
 // are any more events found. In case of a retrieval or parsing error, false is
 // returned and Error() can be queried for the exact failure.
-func (it *ContractsVotingStartedIterator) Next() bool {
+func (it *ContractsVotingProjectEndedIterator) Next() bool {
 	// If the iterator failed, stop iterating
 	if it.fail != nil {
 		return false
@@ -1107,7 +1555,7 @@ func (it *ContractsVotingStartedIterator) Next() bool {
 	if it.done {
 		select {
 		case log := <-it.logs:
-			it.Event = new(ContractsVotingStarted)
+			it.Event = new(ContractsVotingProjectEnded)
 			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 				it.fail = err
 				return false
@@ -1122,7 +1570,7 @@ func (it *ContractsVotingStartedIterator) Next() bool {
 	// Iterator still in progress, wait for either a data or an error event
 	select {
 	case log := <-it.logs:
-		it.Event = new(ContractsVotingStarted)
+		it.Event = new(ContractsVotingProjectEnded)
 		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
 			it.fail = err
 			return false
@@ -1138,40 +1586,41 @@ func (it *ContractsVotingStartedIterator) Next() bool {
 }
 
 // Error returns any retrieval or parsing error occurred during filtering.
-func (it *ContractsVotingStartedIterator) Error() error {
+func (it *ContractsVotingProjectEndedIterator) Error() error {
 	return it.fail
 }
 
 // Close terminates the iteration process, releasing any pending underlying
 // resources.
-func (it *ContractsVotingStartedIterator) Close() error {
+func (it *ContractsVotingProjectEndedIterator) Close() error {
 	it.sub.Unsubscribe()
 	return nil
 }
 
-// ContractsVotingStarted represents a VotingStarted event raised by the Contracts contract.
-type ContractsVotingStarted struct {
-	Raw types.Log // Blockchain specific contextual infos
+// ContractsVotingProjectEnded represents a VotingProjectEnded event raised by the Contracts contract.
+type ContractsVotingProjectEnded struct {
+	ProjectId *big.Int
+	Raw       types.Log // Blockchain specific contextual infos
 }
 
-// FilterVotingStarted is a free log retrieval operation binding the contract event 0x877e2548498f42b7975a186b94ef1d32c86d420b7b806dd2be2bea293b895904.
+// FilterVotingProjectEnded is a free log retrieval operation binding the contract event 0x1c32f86c7e5d094a801c70a05662bcdfd69b6ce9a3fff7b210b8a7b899eb63f5.
 //
-// Solidity: event VotingStarted()
-func (_Contracts *ContractsFilterer) FilterVotingStarted(opts *bind.FilterOpts) (*ContractsVotingStartedIterator, error) {
+// Solidity: event VotingProjectEnded(uint256 projectId)
+func (_Contracts *ContractsFilterer) FilterVotingProjectEnded(opts *bind.FilterOpts) (*ContractsVotingProjectEndedIterator, error) {
 
-	logs, sub, err := _Contracts.contract.FilterLogs(opts, "VotingStarted")
+	logs, sub, err := _Contracts.contract.FilterLogs(opts, "VotingProjectEnded")
 	if err != nil {
 		return nil, err
 	}
-	return &ContractsVotingStartedIterator{contract: _Contracts.contract, event: "VotingStarted", logs: logs, sub: sub}, nil
+	return &ContractsVotingProjectEndedIterator{contract: _Contracts.contract, event: "VotingProjectEnded", logs: logs, sub: sub}, nil
 }
 
-// WatchVotingStarted is a free log subscription operation binding the contract event 0x877e2548498f42b7975a186b94ef1d32c86d420b7b806dd2be2bea293b895904.
+// WatchVotingProjectEnded is a free log subscription operation binding the contract event 0x1c32f86c7e5d094a801c70a05662bcdfd69b6ce9a3fff7b210b8a7b899eb63f5.
 //
-// Solidity: event VotingStarted()
-func (_Contracts *ContractsFilterer) WatchVotingStarted(opts *bind.WatchOpts, sink chan<- *ContractsVotingStarted) (event.Subscription, error) {
+// Solidity: event VotingProjectEnded(uint256 projectId)
+func (_Contracts *ContractsFilterer) WatchVotingProjectEnded(opts *bind.WatchOpts, sink chan<- *ContractsVotingProjectEnded) (event.Subscription, error) {
 
-	logs, sub, err := _Contracts.contract.WatchLogs(opts, "VotingStarted")
+	logs, sub, err := _Contracts.contract.WatchLogs(opts, "VotingProjectEnded")
 	if err != nil {
 		return nil, err
 	}
@@ -1181,8 +1630,8 @@ func (_Contracts *ContractsFilterer) WatchVotingStarted(opts *bind.WatchOpts, si
 			select {
 			case log := <-logs:
 				// New log arrived, parse the event and forward to the user
-				event := new(ContractsVotingStarted)
-				if err := _Contracts.contract.UnpackLog(event, "VotingStarted", log); err != nil {
+				event := new(ContractsVotingProjectEnded)
+				if err := _Contracts.contract.UnpackLog(event, "VotingProjectEnded", log); err != nil {
 					return err
 				}
 				event.Raw = log
@@ -1203,12 +1652,146 @@ func (_Contracts *ContractsFilterer) WatchVotingStarted(opts *bind.WatchOpts, si
 	}), nil
 }
 
-// ParseVotingStarted is a log parse operation binding the contract event 0x877e2548498f42b7975a186b94ef1d32c86d420b7b806dd2be2bea293b895904.
+// ParseVotingProjectEnded is a log parse operation binding the contract event 0x1c32f86c7e5d094a801c70a05662bcdfd69b6ce9a3fff7b210b8a7b899eb63f5.
 //
-// Solidity: event VotingStarted()
-func (_Contracts *ContractsFilterer) ParseVotingStarted(log types.Log) (*ContractsVotingStarted, error) {
-	event := new(ContractsVotingStarted)
-	if err := _Contracts.contract.UnpackLog(event, "VotingStarted", log); err != nil {
+// Solidity: event VotingProjectEnded(uint256 projectId)
+func (_Contracts *ContractsFilterer) ParseVotingProjectEnded(log types.Log) (*ContractsVotingProjectEnded, error) {
+	event := new(ContractsVotingProjectEnded)
+	if err := _Contracts.contract.UnpackLog(event, "VotingProjectEnded", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// ContractsVotingProjectStartedIterator is returned from FilterVotingProjectStarted and is used to iterate over the raw logs and unpacked data for VotingProjectStarted events raised by the Contracts contract.
+type ContractsVotingProjectStartedIterator struct {
+	Event *ContractsVotingProjectStarted // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *ContractsVotingProjectStartedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(ContractsVotingProjectStarted)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(ContractsVotingProjectStarted)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *ContractsVotingProjectStartedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *ContractsVotingProjectStartedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// ContractsVotingProjectStarted represents a VotingProjectStarted event raised by the Contracts contract.
+type ContractsVotingProjectStarted struct {
+	ProjectId *big.Int
+	Raw       types.Log // Blockchain specific contextual infos
+}
+
+// FilterVotingProjectStarted is a free log retrieval operation binding the contract event 0x3a132177e16ff48392058b78d04b6898d7a776195658e94ab38c384562d73049.
+//
+// Solidity: event VotingProjectStarted(uint256 projectId)
+func (_Contracts *ContractsFilterer) FilterVotingProjectStarted(opts *bind.FilterOpts) (*ContractsVotingProjectStartedIterator, error) {
+
+	logs, sub, err := _Contracts.contract.FilterLogs(opts, "VotingProjectStarted")
+	if err != nil {
+		return nil, err
+	}
+	return &ContractsVotingProjectStartedIterator{contract: _Contracts.contract, event: "VotingProjectStarted", logs: logs, sub: sub}, nil
+}
+
+// WatchVotingProjectStarted is a free log subscription operation binding the contract event 0x3a132177e16ff48392058b78d04b6898d7a776195658e94ab38c384562d73049.
+//
+// Solidity: event VotingProjectStarted(uint256 projectId)
+func (_Contracts *ContractsFilterer) WatchVotingProjectStarted(opts *bind.WatchOpts, sink chan<- *ContractsVotingProjectStarted) (event.Subscription, error) {
+
+	logs, sub, err := _Contracts.contract.WatchLogs(opts, "VotingProjectStarted")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(ContractsVotingProjectStarted)
+				if err := _Contracts.contract.UnpackLog(event, "VotingProjectStarted", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseVotingProjectStarted is a log parse operation binding the contract event 0x3a132177e16ff48392058b78d04b6898d7a776195658e94ab38c384562d73049.
+//
+// Solidity: event VotingProjectStarted(uint256 projectId)
+func (_Contracts *ContractsFilterer) ParseVotingProjectStarted(log types.Log) (*ContractsVotingProjectStarted, error) {
+	event := new(ContractsVotingProjectStarted)
+	if err := _Contracts.contract.UnpackLog(event, "VotingProjectStarted", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

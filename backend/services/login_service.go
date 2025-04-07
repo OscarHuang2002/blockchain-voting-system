@@ -40,3 +40,13 @@ func (service *LoginService) LoginWithAddress(address string, password string) (
 
 	return token, nil
 }
+
+func (service *LoginService) IsAdmin(address string) (bool, error) {
+	var user models.User
+	if err := service.DB.Where("address = ?", address).First(&user).Error; err != nil {
+		return false, err
+	}
+
+	// 检查是否为管理员地址
+	return address == "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266", nil
+}
