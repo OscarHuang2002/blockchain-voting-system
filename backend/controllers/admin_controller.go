@@ -159,7 +159,7 @@ func CreateVotingProject(c *gin.Context) {
     c.JSON(http.StatusOK, gin.H{"message": "投票项目创建成功"})
 }
 
-// 获取所有项目 (新增功能)
+// 获取所有项目 (更新功能，排除已删除项目)
 func GetProjects(c *gin.Context) {
     count, err := contractService.GetProjectCount()
     if err != nil {
@@ -173,8 +173,38 @@ func GetProjects(c *gin.Context) {
         if err != nil {
             continue // 跳过获取失败的项目
         }
-        projects = append(projects, project)
+        
+        // 判断项目是否已删除，只添加未删除的项目
+        isDeleted, ok := project["isDeleted"].(bool)
+        if !ok || !isDeleted {
+            projects = append(projects, project)
+        }
     }
 
     c.JSON(http.StatusOK, gin.H{"projects": projects})
+}
+
+// 删除项目
+func DeleteProject(c *gin.Context) {
+    id := c.Param("id")
+    
+    if id == "" {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "缺少项目ID"})
+        return
+    }
+
+    // 将ID转换为uint
+    projectID, err := strconv.ParseUint(id, 10, 32)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": "项目ID格式错误"})
+        return
+    }
+
+    err = contractService.DeleteProject(uint(projectID))
+    if err != nil {
+        c.JSON(http.StatusInternalServerError, gin.H{"error": "删除项目失败", "details": err.Error()})
+        return
+    }
+
+    c.JSON(http.StatusOK, gin.H{"message": "项目删除成功"})
 }

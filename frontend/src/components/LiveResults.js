@@ -17,10 +17,19 @@ import {
   Row,
   Col,
   Divider,
+  Carousel,
+  Typography,
+  Input,
+  Tag,
+  Button,
+  Space,
 } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { Option } = Select;
+const { Title, Paragraph } = Typography;
+const { Search } = Input;
 
 // 饼图颜色
 const COLORS = [
@@ -38,16 +47,26 @@ export default function LiveResults({ account }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [projects, setProjects] = useState([]);
+  const [filteredProjects, setFilteredProjects] = useState([]);
   const [selectedProject, setSelectedProject] = useState(null);
   const [totalVotes, setTotalVotes] = useState(0);
   const [initialized, setInitialized] = useState(false);
+  const [projectSearchText, setProjectSearchText] = useState("");
+  const [hotProjects, setHotProjects] = useState([]);
+  const [hotProjectsData, setHotProjectsData] = useState([]);
+  const [loadingHotProjects, setLoadingHotProjects] = useState(true);
 
   // 初始化：获取项目列表
   useEffect(() => {
     const initializeData = async () => {
       try {
         setLoading(true);
-        await fetchProjects();
+        setLoadingHotProjects(true);
+        const projectsList = await fetchProjects();
+
+        // 获取热门项目
+        await fetchHotProjects(projectsList);
+
         setInitialized(true);
       } catch (error) {
         console.error("初始化数据失败:", error);
@@ -66,18 +85,81 @@ export default function LiveResults({ account }) {
       const response = await axios.get("http://localhost:8080/projects");
       const projectList = response.data.projects || [];
       setProjects(projectList);
-
-      // 如果有项目，选择第一个并加载其投票结果
-      if (projectList.length > 0) {
-        setSelectedProject(projectList[0].id);
-        await loadVotingResults(projectList[0].id);
-      }
-
+      setFilteredProjects(projectList);
       return projectList;
     } catch (error) {
       console.error("获取项目失败:", error);
       message.error("获取项目失败: " + error.message);
       return [];
+    }
+  };
+
+  // 搜索项目
+  const searchProjects = (text) => {
+    setProjectSearchText(text);
+
+    if (!text) {
+      setFilteredProjects(projects);
+      return;
+    }
+
+    const lowercaseSearch = text.toLowerCase();
+    const filtered = projects.filter(
+      (project) =>
+        project.id.toString().includes(text) ||
+        project.description.toLowerCase().includes(lowercaseSearch)
+    );
+
+    setFilteredProjects(filtered);
+  };
+
+  // 获取热门项目（按投票数排序）
+  const fetchHotProjects = async (projectList) => {
+    setLoadingHotProjects(true);
+    try {
+      const projectVotesPromises = projectList.map(async (project) => {
+        const response = await axios.get("http://localhost:8080/candidates", {
+          params: { projectId: project.id },
+        });
+        const candidates = response.data.candidates || [];
+        const totalVotes = candidates.reduce((sum, c) => sum + c.votes, 0);
+        return {
+          ...project,
+          totalVotes,
+          candidates,
+        };
+      });
+
+      const projectsWithVotes = await Promise.all(projectVotesPromises);
+
+      // 根据总票数排序，得到热门项目
+      const sorted = [...projectsWithVotes].sort(
+        (a, b) => b.totalVotes - a.totalVotes
+      );
+      const top3Projects = sorted.slice(0, 3);
+
+      setHotProjects(top3Projects);
+
+      // 为每个热门项目准备投票数据
+      const hotProjectsChartData = top3Projects.map((project) => {
+        // 准备饼图数据
+        const chartData = project.candidates.map((candidate) => ({
+          name: candidate.name,
+          value: candidate.votes,
+        }));
+
+        return {
+          project,
+          chartData,
+        };
+      });
+
+      setHotProjectsData(hotProjectsChartData);
+    } catch (error) {
+      console.error("获取热门项目失败:", error);
+      message.error("获取热门项目失败，请稍后重试");
+    } finally {
+      setLoadingHotProjects(false);
     }
   };
 
@@ -126,6 +208,12 @@ export default function LiveResults({ account }) {
     loadVotingResults(value);
   };
 
+  // 返回热门项目列表
+  const backToHotProjects = () => {
+    setSelectedProject(null);
+    setData([]);
+  };
+
   // 定时刷新数据（每30秒）
   useEffect(() => {
     if (!initialized) return;
@@ -133,21 +221,24 @@ export default function LiveResults({ account }) {
     const refreshInterval = setInterval(() => {
       if (selectedProject) {
         loadVotingResults(selectedProject);
+      } else if (projects.length > 0) {
+        // 只有在未选择特定项目时刷新热门项目
+        fetchHotProjects(projects);
       }
     }, 30000);
 
     return () => clearInterval(refreshInterval);
-  }, [initialized, selectedProject]);
+  }, [initialized, selectedProject, projects]);
 
   // 添加页面可见性变化检测，切换回页面时刷新数据
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (
-        document.visibilityState === "visible" &&
-        initialized &&
-        selectedProject
-      ) {
-        loadVotingResults(selectedProject);
+      if (document.visibilityState === "visible" && initialized) {
+        if (selectedProject) {
+          loadVotingResults(selectedProject);
+        } else if (projects.length > 0) {
+          fetchHotProjects(projects);
+        }
       }
     };
 
@@ -155,80 +246,188 @@ export default function LiveResults({ account }) {
     return () => {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [initialized, selectedProject]);
+  }, [initialized, selectedProject, projects]);
 
   const getProjectName = (projectId) => {
     const project = projects.find((p) => p.id === projectId);
     return project ? project.description : "未选择项目";
   };
 
-  return (
-    <div className="live-results-container">
-      <Card title="实时投票统计" bordered={false}>
+  // 渲染热门项目轮播图
+  const renderHotProjectsCarousel = () => {
+    if (loadingHotProjects) {
+      return (
+        <div style={{ textAlign: "center", padding: "50px 0" }}>
+          <Spin size="large" tip="加载热门项目中..." />
+        </div>
+      );
+    }
+
+    if (hotProjectsData.length === 0) {
+      return (
+        <Empty
+          description="暂无投票数据"
+          image={Empty.PRESENTED_IMAGE_SIMPLE}
+          style={{ marginTop: 50 }}
+        />
+      );
+    }
+
+    return (
+      <Carousel
+        autoplay
+        autoplaySpeed={5000}
+        effect="fade"
+        style={{ marginTop: 24, marginBottom: 50 }}
+      >
+        {hotProjectsData.map((item, index) => (
+          <div key={item.project.id}>
+            <Card
+              title={
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>
+                    热门项目 #{index + 1}:{" "}
+                    {item.project.description.substring(0, 30)}
+                    {item.project.description.length > 30 ? "..." : ""}
+                  </span>
+                  <Tag color={item.project.isActive ? "green" : "default"}>
+                    {item.project.isActive ? "进行中" : "未开始/已结束"}
+                  </Tag>
+                </div>
+              }
+              extra={
+                <Button
+                  type="primary"
+                  onClick={() => handleProjectChange(item.project.id)}
+                >
+                  查看详情
+                </Button>
+              }
+            >
+              <Row gutter={16}>
+                <Col xs={24} md={8}>
+                  <Card>
+                    <Statistic title="项目ID" value={item.project.id} />
+                  </Card>
+                </Col>
+                <Col xs={24} md={8}>
+                  <Card>
+                    <Statistic
+                      title="总投票数"
+                      value={item.project.totalVotes}
+                      valueStyle={{ color: "#3f8600" }}
+                    />
+                  </Card>
+                </Col>
+                <Col xs={24} md={8}>
+                  <Card>
+                    <Statistic
+                      title="候选人数量"
+                      value={item.chartData.length}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+
+              <div style={{ height: 300, marginTop: 24 }}>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={item.chartData}
+                      dataKey="value"
+                      nameKey="name"
+                      cx="50%"
+                      cy="50%"
+                      outerRadius={100}
+                      label={({ name, value, percent }) =>
+                        `${name}: ${value} (${(percent * 100).toFixed(1)}%)`
+                      }
+                    >
+                      {item.chartData.map((entry, i) => (
+                        <Cell
+                          key={`cell-${i}`}
+                          fill={COLORS[i % COLORS.length]}
+                        />
+                      ))}
+                    </Pie>
+                    <Tooltip formatter={(value) => `${value} 票`} />
+                    <Legend />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </Card>
+          </div>
+        ))}
+      </Carousel>
+    );
+  };
+
+  // 渲染项目详情
+  const renderProjectDetail = () => {
+    return (
+      <div style={{ marginTop: 24 }}>
         <div style={{ marginBottom: 16 }}>
-          <span style={{ marginRight: 8 }}>选择项目:</span>
-          <Select
-            value={selectedProject}
-            style={{ width: 300 }}
-            onChange={handleProjectChange}
-            loading={loading && projects.length === 0}
-            disabled={loading && projects.length === 0}
+          <Button
+            type="link"
+            icon={<ArrowLeftOutlined />}
+            onClick={backToHotProjects}
+            style={{ paddingLeft: 0 }}
           >
-            {projects.map((project) => (
-              <Option key={project.id} value={project.id}>
-                {project.description.substring(0, 30)}...
-              </Option>
-            ))}
-          </Select>
+            返回热门项目
+          </Button>
         </div>
 
         {loading ? (
-          <div style={{ textAlign: "center", marginTop: 50, marginBottom: 50 }}>
+          <div style={{ textAlign: "center", padding: "50px 0" }}>
             <Spin size="large" tip="加载投票数据中..." />
           </div>
         ) : (
           <>
-            {selectedProject && (
-              <div style={{ marginBottom: 24 }}>
-                <Row gutter={16}>
-                  <Col span={24}>
-                    <Card>
-                      <Statistic
-                        title="当前项目"
-                        value={getProjectName(selectedProject)}
-                        valueStyle={{ fontSize: 16 }}
-                      />
-                    </Card>
-                  </Col>
-                </Row>
-                <Divider />
-                <Row gutter={16}>
-                  <Col span={8}>
-                    <Card>
-                      <Statistic
-                        title="总投票数"
-                        value={totalVotes}
-                        valueStyle={{ color: "#3f8600" }}
-                      />
-                    </Card>
-                  </Col>
-                  <Col span={8}>
-                    <Card>
-                      <Statistic title="候选人数量" value={data.length} />
-                    </Card>
-                  </Col>
-                  <Col span={8}>
-                    <Card>
-                      <Statistic
-                        title="最新刷新时间"
-                        value={new Date().toLocaleTimeString()}
-                        suffix="自动每30秒刷新"
-                      />
-                    </Card>
-                  </Col>
-                </Row>
-              </div>
-            )}
+            <div style={{ marginBottom: 24 }}>
+              <Row gutter={16}>
+                <Col span={24}>
+                  <Card>
+                    <Statistic
+                      title="当前项目"
+                      value={getProjectName(selectedProject)}
+                      valueStyle={{ fontSize: 16 }}
+                    />
+                  </Card>
+                </Col>
+              </Row>
+              <Divider />
+              <Row gutter={16}>
+                <Col span={8}>
+                  <Card>
+                    <Statistic
+                      title="总投票数"
+                      value={totalVotes}
+                      valueStyle={{ color: "#3f8600" }}
+                    />
+                  </Card>
+                </Col>
+                <Col span={8}>
+                  <Card>
+                    <Statistic title="候选人数量" value={data.length} />
+                  </Card>
+                </Col>
+                <Col span={8}>
+                  <Card>
+                    <Statistic
+                      title="最新刷新时间"
+                      value={new Date().toLocaleTimeString()}
+                      suffix="自动每30秒刷新"
+                    />
+                  </Card>
+                </Col>
+              </Row>
+            </div>
 
             {data.length > 0 ? (
               <div style={{ width: "100%", height: 400 }}>
@@ -265,6 +464,68 @@ export default function LiveResults({ account }) {
                 style={{ marginTop: 50 }}
               />
             )}
+          </>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <div className="live-results-container">
+      <Card title="实时投票统计" bordered={false}>
+        <Title level={4}>项目选择</Title>
+        <div
+          style={{
+            marginBottom: 16,
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <Space>
+            <span>选择项目:</span>
+            <Select
+              value={selectedProject}
+              style={{ width: 300 }}
+              onChange={handleProjectChange}
+              loading={loading && projects.length === 0}
+              disabled={loading && projects.length === 0}
+              allowClear
+              placeholder="请选择项目"
+              dropdownRender={(menu) => (
+                <>
+                  <div style={{ padding: "8px" }}>
+                    <Search
+                      placeholder="搜索项目ID或描述"
+                      allowClear
+                      value={projectSearchText}
+                      onChange={(e) => searchProjects(e.target.value)}
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+                  <Divider style={{ margin: "4px 0" }} />
+                  {menu}
+                </>
+              )}
+            >
+              {filteredProjects.map((project) => (
+                <Option key={project.id} value={project.id}>
+                  项目#{project.id}: {project.description.substring(0, 30)}...
+                </Option>
+              ))}
+            </Select>
+          </Space>
+        </div>
+
+        <Divider />
+
+        {selectedProject ? (
+          // 如果选择了项目，显示项目详情
+          renderProjectDetail()
+        ) : (
+          // 否则显示热门项目轮播图
+          <>
+            <Title level={4}>热门项目</Title>
+            {renderHotProjectsCarousel()}
           </>
         )}
       </Card>

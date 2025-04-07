@@ -31,6 +31,7 @@ contract VotingContract {
         uint256 id;
         string description;     // 项目简介
         bool votingOpen;        // 投票状态
+        bool isDeleted;         //是否已删除
         Candidate[] candidates; // 候选人列表
         mapping(address => bool) hasVoted; // 记录用户是否在本项目中已投票
     }
@@ -47,6 +48,7 @@ contract VotingContract {
     event VotingProjectCreated(uint256 projectId, string description);
     event VotingProjectStarted(uint256 projectId);
     event VotingProjectEnded(uint256 projectId);
+    event ProjectDeleted(uint256 ProjectId);
     event VoteCast(address indexed voter, uint256 projectId, uint256 candidateId, bytes32 blockHash);
     event CandidateAdded(uint256 projectId, uint256 candidateId, string name, string imageUrl, string candidateDescription);
     event CandidateUpdated(uint256 projectId, uint256 candidateId, string newName, string newImageUrl, string newCandidateDescription);
@@ -94,6 +96,48 @@ contract VotingContract {
         require(project.votingOpen, "Voting not started for this project");
         project.votingOpen = false;
         emit VotingProjectEnded(_projectId);
+    }
+    // 删除项目（逻辑删除）
+        function deleteProject(uint256 _projectId) external onlyAdmin {
+        VotingProject storage project = projects[_projectId];
+        require(project.id != 0, "Project does not exist");
+        project.isDeleted = true;
+        emit ProjectDeleted(_projectId);
+    }
+
+    // 修改获取项目信息的函数，返回删除状态
+    function getProjectInfo(uint256 _projectId) external view returns (uint256, string memory, bool, bool) {
+        VotingProject storage project = projects[_projectId];
+        return (project.id, project.description, project.votingOpen, project.isDeleted);
+    }
+
+    // 修改获取所有项目的功能，排除已删除的项目
+    function getAllProjects() external view returns (uint256[] memory, string[] memory, bool[] memory) {
+        // 计算未删除的项目数量
+        uint256 activeProjectCount = 0;
+        for (uint256 i = 1; i <= projectCount; i++) {
+            if (!projects[i].isDeleted) {
+                activeProjectCount++;
+            }
+        }
+        
+        // 创建返回数组
+        uint256[] memory ids = new uint256[](activeProjectCount);
+        string[] memory descriptions = new string[](activeProjectCount);
+        bool[] memory statuses = new bool[](activeProjectCount);
+        
+        // 填充数组
+        uint256 index = 0;
+        for (uint256 i = 1; i <= projectCount; i++) {
+            if (!projects[i].isDeleted) {
+                ids[index] = projects[i].id;
+                descriptions[index] = projects[i].description;
+                statuses[index] = projects[i].votingOpen;
+                index++;
+            }
+        }
+        
+        return (ids, descriptions, statuses);
     }
     
     // 添加候选人至指定项目
@@ -187,12 +231,6 @@ contract VotingContract {
     // 获取指定项目所有候选人信息（注意：不能直接返回包含映射的结构体，因此只返回候选人数组）
     function getAllCandidates(uint256 _projectId) external view returns (Candidate[] memory) {
         return projects[_projectId].candidates;
-    }
-    
-    // 获取指定项目的投票状态与简介
-    function getProjectInfo(uint256 _projectId) external view returns (uint256, string memory, bool) {
-        VotingProject storage project = projects[_projectId];
-        return (project.id, project.description, project.votingOpen);
     }
     
     // 检查用户是否在指定项目中已经投票

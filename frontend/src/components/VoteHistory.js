@@ -1,19 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { Table, Card, Typography, Spin, Empty, Tag, Image } from "antd";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import {
+  Table,
+  Card,
+  Typography,
+  Spin,
+  Empty,
+  Tag,
+  Image,
+  Input,
+  Space,
+} from "antd";
+import { CheckCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const { Title, Text } = Typography;
+const { Search } = Input;
 
 const VoteHistory = ({ account }) => {
   const [loading, setLoading] = useState(true);
   const [voteHistory, setVoteHistory] = useState([]);
+  const [filteredVoteHistory, setFilteredVoteHistory] = useState([]);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     if (account) {
       fetchVoteHistory();
     }
   }, [account]);
+
+  // 当原始投票历史或搜索文本变化时，过滤数据
+  useEffect(() => {
+    filterVoteHistory();
+  }, [voteHistory, searchText]);
 
   const fetchVoteHistory = async () => {
     try {
@@ -23,12 +41,36 @@ const VoteHistory = ({ account }) => {
       );
       if (response.data && response.data.votes) {
         setVoteHistory(response.data.votes);
+        setFilteredVoteHistory(response.data.votes);
       }
     } catch (error) {
       console.error("获取投票历史失败:", error);
     } finally {
       setLoading(false);
     }
+  };
+
+  // 处理搜索功能
+  const handleSearch = (value) => {
+    setSearchText(value);
+  };
+
+  // 过滤投票历史
+  const filterVoteHistory = () => {
+    if (!searchText) {
+      setFilteredVoteHistory(voteHistory);
+      return;
+    }
+
+    const lowerCaseSearch = searchText.toLowerCase();
+    const filtered = voteHistory.filter(
+      (vote) =>
+        vote.projectId.toString().includes(lowerCaseSearch) ||
+        vote.projectName.toLowerCase().includes(lowerCaseSearch) ||
+        vote.candidateName.toLowerCase().includes(lowerCaseSearch)
+    );
+
+    setFilteredVoteHistory(filtered);
   };
 
   const columns = [
@@ -86,18 +128,34 @@ const VoteHistory = ({ account }) => {
   return (
     <Card className="vote-history-card">
       <Title level={3}>我的投票历史</Title>
+
+      <div style={{ marginBottom: 16 }}>
+        <Search
+          placeholder="搜索项目ID、项目名称或候选人"
+          allowClear
+          enterButton={<SearchOutlined />}
+          onSearch={handleSearch}
+          onChange={(e) => handleSearch(e.target.value)}
+          style={{ width: 300 }}
+        />
+      </div>
+
       <div className="vote-history-content">
         <Spin spinning={loading}>
-          {voteHistory.length > 0 ? (
+          {filteredVoteHistory.length > 0 ? (
             <Table
-              dataSource={voteHistory}
+              dataSource={filteredVoteHistory}
               columns={columns}
               rowKey={(record) => `${record.projectId}-${record.candidateId}`}
-              pagination={voteHistory.length > 10 ? { pageSize: 10 } : false}
+              pagination={
+                filteredVoteHistory.length > 10 ? { pageSize: 10 } : false
+              }
             />
           ) : (
             <Empty
-              description="您还没有参与任何投票"
+              description={
+                searchText ? "没有找到匹配的投票记录" : "您还没有参与任何投票"
+              }
               style={{ marginTop: 40 }}
             />
           )}

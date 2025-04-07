@@ -11,6 +11,7 @@ type ProjectInfo struct {
     Id          *big.Int
     Description string
     VotingOpen  bool
+    IsDeleted   bool
 }
 
 type CandidateInfo struct {
@@ -35,7 +36,8 @@ func (s *ContractService) CheckUserVoted(projectId *big.Int, address string) (bo
 
 // GetProject 获取项目信息
 func (s *ContractService) GetProject(projectId *big.Int) (*ProjectInfo, error) {
-    id, description, votingOpen, err := s.contract.GetProjectInfo(nil, projectId)
+    // 修改为接收5个返回值
+    id, description, votingOpen, isDeleted, err := s.contract.GetProjectInfo(nil, projectId)
     if err != nil {
         return nil, err
     }
@@ -44,6 +46,7 @@ func (s *ContractService) GetProject(projectId *big.Int) (*ProjectInfo, error) {
         Id:          id,
         Description: description,
         VotingOpen:  votingOpen,
+        IsDeleted:   isDeleted,
     }, nil
 }
 

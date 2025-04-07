@@ -150,7 +150,7 @@ function App() {
                     {
                       key: "voteHistory",
                       icon: <HistoryOutlined />,
-                      label: <Link to="/voteHistory">我的投票记录</Link>,
+                      label: <Link to="/voteHistory">我的投票历史</Link>,
                     },
                     {
                       key: "verify",

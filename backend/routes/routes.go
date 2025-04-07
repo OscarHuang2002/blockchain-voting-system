@@ -24,6 +24,11 @@ func SetupRouter(r *gin.Engine) {
     
     // 项目相关
     r.GET("/projects", controllers.GetProjects)
+
+    r.POST("/upload/image", controllers.UploadImage)
+    // 设置静态文件服务，用于访问上传的图片
+    r.Static("/images", "./uploads/images")
+    
     
     // 管理员操作
     admin := r.Group("/AdminPanel")
@@ -34,5 +39,7 @@ func SetupRouter(r *gin.Engine) {
         admin.DELETE("/deleteCandidate/:id", controllers.DeleteCandidate)
         admin.POST("/startVoting", controllers.StartVoting)
         admin.POST("/endVoting", controllers.EndVoting)
+        admin.DELETE("/deleteProject/:id", controllers.DeleteProject)
+        // admin.POST("/upload/image", controllers.UploadImage)
     }
 }

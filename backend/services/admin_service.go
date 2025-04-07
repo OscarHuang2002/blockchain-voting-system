@@ -194,7 +194,8 @@ func (cs *ContractService) GetProjectInfo(projectID uint) (map[string]interface{
         return nil, ErrContractNotInitialized
     }
 
-    id, description, isActive, err := cs.contract.GetProjectInfo(nil, big.NewInt(int64(projectID)))
+    // 修改为接收5个返回值
+    id, description, isActive, isDeleted, err := cs.contract.GetProjectInfo(nil, big.NewInt(int64(projectID)))
     if err != nil {
         log.Printf("获取项目信息失败: %v", err)
         return nil, err
@@ -204,5 +205,28 @@ func (cs *ContractService) GetProjectInfo(projectID uint) (map[string]interface{
         "id":          id.Uint64(),
         "description": description,
         "isActive":    isActive,
+        "isDeleted":   isDeleted,
     }, nil
+}
+
+// 删除项目 (新增功能)
+func (cs *ContractService) DeleteProject(projectID uint) error {
+    if cs == nil || cs.contract == nil {
+        return ErrContractNotInitialized
+    }
+
+    tx, err := cs.contract.DeleteProject(cs.auth, big.NewInt(int64(projectID)))
+    if err != nil {
+        log.Printf("删除项目失败: %v", err)
+        return err
+    }
+
+    // 等待交易完成
+    _, err = cs.client.TransactionReceipt(context.Background(), tx.Hash())
+    if err != nil {
+        log.Printf("等待交易完成失败: %v", err)
+        return err
+    }
+
+    return nil
 }
